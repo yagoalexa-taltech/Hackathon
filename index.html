@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YCredit | Tu primer paso financiero</title>
+  <meta name="description" content="Microcréditos responsables para jóvenes sin historial. Simula, aprende y construye tu historial con YCredit. 100% digital, claro y flexible." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-wrap">
+      <a class="brand" href="#">
+        <!-- Logo SVG -->
+        <svg class="logo" viewBox="0 0 128 32" aria-label="YCredit">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#8b5cf6"/>
+              <stop offset="1" stop-color="#22c55e"/>
+            </linearGradient>
+          </defs>
+          <!-- Y -->
+          <path d="M8 4 L16 16 L12 16 L12 28 L4 28 L4 16 L0 16 Z" fill="url(#g)"/>
+          <!-- C R E D I T (simple wordmark) -->
+          <text x="28" y="22" font-family="Inter, system-ui" font-size="18" font-weight="800" fill="currentColor">YCredit</text>
+        </svg>
+        <span class="beta">BETA</span>
+      </a>
+
+      <nav class="nav" id="navMain">
+        <a href="#simulador">Simulador</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#productos">Productos</a>
+        <a href="#quienes">Quiénes somos</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" aria-label="Cambiar tema">
+          <span class="icon-sun" aria-hidden="true">☀️</span>
+          <span class="icon-moon" aria-hidden="true">🌙</span>
+        </button>
+        <button id="burger" class="burger" aria-label="Abrir menú">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Tu <span class="accent">primer paso financiero</span>, sin miedo y sin enredos</h1>
+          <p class="lead">
+            Te prestamos lo justo para demostrar que eres responsable. Con pagos puntuales,
+            <strong>ganas confianza</strong> y acceso a montos mayores. Sin codeudor en la mayoría de casos.
+          </p>
+          <ul class="bullets">
+            <li>✔ Scoring alternativo (ingresos variables, apps, referencias digitales)</li>
+            <li>✔ Monto pequeño, pagos claros y flexibles</li>
+            <li>✔ Construye historial desde el día 1</li>
+          </ul>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#simulador">Simula tu cuota</a>
+            <a class="btn btn-ghost" href="#como-funciona">¿Cómo funciona?</a>
+          </div>
+          <p class="muted info-note">
+            Evitamos frases como “crédito fácil y rápido”. Preferimos <strong>informar con claridad</strong> y educación financiera.
+          </p>
+        </div>
+
+        <!-- Simulador Card -->
+        <div class="hero-card" id="simulador">
+          <div class="card-header">
+            <h2>Simulador de Microcrédito</h2>
+            <span class="muted">*Referencial, sujeto a validación</span>
+          </div>
+
+          <form class="sim-form" id="simForm" novalidate>
+            <!-- Monto -->
+            <label for="montoInput">Monto</label>
+            <div class="input-row">
+              <input type="text" id="montoInput" inputmode="numeric" autocomplete="off" aria-describedby="montoHelp"/>
+            </div>
+            <input type="range" id="montoRange" min="200000" max="5000000" step="50000" />
+            <small id="montoHelp" class="muted">Desde $200.000 hasta $5.000.000.</small>
+
+            <!-- Plazo -->
+            <label for="plazoRange">Plazo (meses)</label>
+            <div class="range-row">
+              <span class="range-min">3</span>
+              <input type="range" id="plazoRange" min="3" max="36" step="1" />
+              <span class="range-max">36</span>
+            </div>
+
+            <!-- Tasa + Seguro -->
+            <div class="grid-2">
+              <div>
+                <label for="teaSelect">Tasa Efectiva Anual (TEA)</label>
+                <select id="teaSelect" aria-label="Tasa efectiva anual">
+                  <option value="0.24">24% EA</option>
+                  <option value="0.28" selected>28% EA</option>
+                  <option value="0.32">32% EA</option>
+                  <option value="0.36">36% EA</option>
+                </select>
+              </div>
+              <div>
+                <label for="seguroInput">Seguro mensual (opcional)</label>
+                <input type="text" id="seguroInput" placeholder="$0" inputmode="numeric" />
+                <small class="muted">Protege tu equipo y tu cuota.</small>
+              </div>
+            </div>
+
+            <!-- Aporta un poco más -->
+            <label for="extraInput">Pagar un poco más cada mes (opcional)</label>
+            <input type="text" id="extraInput" placeholder="$0" inputmode="numeric" />
+            <small class="muted">Verás cómo podría reducirse el tiempo de tu crédito.</small>
+
+            <!-- Resultados -->
+            <div class="result-card">
+              <div class="result-row">
+                <span>Cuota estimada</span>
+                <strong id="cuotaTxt">$0</strong>
+              </div>
+              <div class="result-row">
+                <span>Intereses totales</span>
+                <strong id="interesesTxt">$0</strong>
+              </div>
+              <div class="result-row">
+                <span>Total a pagar</span>
+                <strong id="totalTxt">$0</strong>
+              </div>
+              <div class="result-row alt">
+                <span>Con tu aporte extra ↓ plazo aprox.</span>
+                <strong id="plazoReducidoTxt">—</strong>
+              </div>
+              <div class="result-note">
+                <small>*Método francés. TEM derivada de TEA. Cifras informativas.</small>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="cta-row">
+              <a id="ctaWhatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener">Aplicar por WhatsApp</a>
+              <button type="button" id="ctaContinuar" class="btn btn-primary">Continuar solicitud</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="how" id="como-funciona">
+      <div class="container">
+        <h2>¿Cómo funciona?</h2>
+        <div class="cards-3">
+          <article class="mini-card">
+            <h3>1) Simula y aplica</h3>
+            <p>Todo desde tu casa. Pedimos papeles <strong>solo si es necesario</strong> por monto o riesgo.</p>
+          </article>
+          <article class="mini-card">
+            <h3>2) Scoring alternativo</h3>
+            <p>Ingresos variables, apps, hábitos de pago y referencias digitales para evaluar tu solicitud.</p>
+          </article>
+          <article class="mini-card">
+            <h3>3) Desembolsa y aprende</h3>
+            <p>Cuotas claras, recordatorios, educación financiera y <strong>puntos por lealtad</strong>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beneficios y lealtad -->
+    <section class="benefits" id="beneficios">
+      <div class="container">
+        <h2>Beneficios que sí suman</h2>
+        <div class="cards-3">
+          <article class="mini-card">
+            <h3>Puntos por lealtad</h3>
+            <p>Cada pago puntual agrega puntos que pueden mejorar tasa, monto y promociones.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Flexibilidad responsable</h3>
+            <p>¿Te atrasaste? Hablamos antes: extensiones o reprogramación para proteger tu historial.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Alianzas útiles</h3>
+            <p>Trabajamos con plataformas para entender mejor tus ingresos y ajustar tu capacidad de pago.</p>
+          </article>
+        </div>
+        <div class="pay-channels">
+          <p class="muted">Canales de pago: transferencias, billeteras digitales y puntos aliados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Productos y servicios -->
+    <section class="products" id="productos">
+      <div class="container">
+        <h2>Productos y servicios</h2>
+        <div class="cards-3">
+          <article class="product-card">
+            <h3>Microcrédito Tech</h3>
+            <p>Para tu <strong>celular o laptop</strong>. Montos pequeños, plazos cortos y seguro opcional.</p>
+          </article>
+          <article class="product-card">
+            <h3>Microcrédito Movilidad</h3>
+            <p>Patineta o bici eléctrica. Pensado para <strong>productividad y estudio</strong>.</p>
+          </article>
+          <article class="product-card">
+            <h3>Línea “Empieza”</h3>
+            <p>Primer crédito con cupo bajo para <strong>construir historial</strong> sin estrés.</p>
+          </article>
+        </div>
+        <div class="cards-3 mt">
+          <article class="mini-card">
+            <h3>Educación financiera</h3>
+            <p>Blog y guías claras: tasa de interés, cómo comparar ofertas, y cómo cuidar tu score.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Recordatorios & app</h3>
+            <p>Notificaciones y calendario para organizarte. Si avisas, tu puntaje no se castiga de inmediato.</p>
+          </article>
+          <article class="mini-card">
+            <h3>Ahorro programado</h3>
+            <p>Si pagas más de tu cuota, reduces plazo. Te ayudamos a proyectarlo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiénes somos -->
+    <section class="about" id="quienes">
+      <div class="container about-grid">
+        <div>
+          <h2>Quiénes somos</h2>
+          <p>
+            En <strong>YCredit</strong> creemos que el primer crédito debe ser <strong>seguro, claro y educativo</strong>.
+            No juzgamos: te acompañamos para que aprendas a manejar tu dinero con montos pequeños y pagos fáciles.
+          </p>
+          <ul class="ticks">
+            <li>Transparencia total en costos.</li>
+            <li>Privacidad y tratamiento responsable de datos.</li>
+            <li>Enfoque de aprendizaje: “si te presto, ¿cómo te ayudo a pagar?”</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h3>Nuestra promesa</h3>
+          <p>Decisiones claras, evaluación justa y acompañamiento si algo se complica.</p>
+          <a class="btn btn-primary" href="#simulador">Quiero empezar</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+      <div class="container">
+        <h2>Preguntas frecuentes</h2>
+        <details>
+          <summary>¿Necesito historial crediticio?</summary>
+          <p>No. Justo está pensado para tu <strong>primer crédito</strong>. Usamos evaluación alternativa.</p>
+        </details>
+        <details>
+          <summary>¿Piden codeudor?</summary>
+          <p>No en la mayoría de casos. Podría pedirse si el riesgo es alto o el monto supera topes.</p>
+        </details>
+        <details>
+          <summary>¿Qué pasa si no puedo pagar a tiempo?</summary>
+          <p>Tu historial podría verse afectado, pero primero te ofrecemos <strong>opciones de flexibilidad</strong> como extensiones o reprogramación.</p>
+        </details>
+        <details>
+          <summary>¿Cómo gano puntos de lealtad?</summary>
+          <p>Pagando a tiempo y usando productos aliados. Tus puntos ayudan a mejores tasas y montos.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="foot-brand">
+        <span class="logo-text">YCredit</span>
+        <small class="muted">© 2025 YCredit. Todos los derechos reservados.</small>
+      </div>
+      <div class="legal">
+        <a href="#" aria-label="Políticas de privacidad">Políticas</a>
+        <a href="#" aria-label="Términos y condiciones">Términos</a>
+        <a href="#" aria-label="Tratamiento de datos">Datos</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
