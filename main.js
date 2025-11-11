@@ -1,132 +1,168 @@
-/* ConFío - mapa de puntos agroecológicos
- * KPIs: visualización clara, uso de coordenadas del dataset, acceso sin errores
- */
-let map, markers = [];
-const counterEl = document.getElementById('counter');
-const warnEl = document.getElementById('warn');
+/* THEME */
+const root = document.documentElement;
+const storedTheme = localStorage.getItem("yc-theme");
+if (storedTheme) document.documentElement.setAttribute("data-theme", storedTheme);
 
-function initMap(){
-  map = L.map('map', {zoomControl: true}).setView([4.65,-74.1], 11); // Bogotá fallback
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap',
-    maxZoom: 19,
-  }).addTo(map);
-}
-
-function iconFor(category){
-  const palette = {
-    food: '#49708A',
-    cosmetics: '#88ABC2',
-    pets: '#CAFF42'
-  };
-  const color = palette[category] || '#49708A';
-  // simple colored circle SVG icon
-  return L.divIcon({
-    className: 'custom-marker',
-    html: `<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-      <circle cx="14" cy="14" r="10" fill="${color}" stroke="white" stroke-width="3"/>
-    </svg>`,
-    iconSize:[28,28],
-    iconAnchor:[14,14]
-  });
-}
-
-function setWarn(msg){
-  if(!msg){warnEl.hidden = true; warnEl.textContent='';return;}
-  warnEl.hidden = false; warnEl.textContent = msg;
-}
-
-async function loadData(){
-  try{
-    const res = await fetch('./data.json',{cache:'no-store'});
-    if(!res.ok) throw new Error('No se pudo cargar el dataset');
-    const data = await res.json();
-    return Array.isArray(data) ? data : data.items || [];
-  }catch(err){
-    console.error(err);
-    setWarn('⚠️ Error al cargar los datos. Verifica el archivo data.json');
-    return [];
-  }
-}
-
-function renderMarkers(items){
-  // limpiar previos
-  markers.forEach(m => m.remove());
-  markers = [];
-
-  items.forEach(item => {
-    // validar coordenadas KPI
-    const lat = Number(item.lat), lon = Number(item.lon);
-    if(Number.isFinite(lat) && Number.isFinite(lon)){
-      const m = L.marker([lat, lon], {icon: iconFor(item.industry)})
-        .addTo(map)
-        .bindPopup(`
-          <div class="popup">
-            <strong>${item.name ?? 'Sin nombre'}</strong><br/>
-            <small>${(item.city||'')}${item.address ? ' - '+item.address : ''}</small><br/>
-            <span class="badge">${labelIndustry(item.industry)}</span>
-            ${item.url ? `<div style="margin-top:.3rem"><a target="_blank" rel="noopener" href="${item.url}">Cómo llegar / sitio</a></div>`:''}
-          </div>
-        `);
-      markers.push(m);
-    }
-  });
-  counterEl.textContent = `${items.length} Sitios${items.length===1?'':''}`;
-}
-
-function labelIndustry(key){
-  return key==='food' ? 'Alimentos' : key==='cosmetics' ? 'Cosméticos' : key==='pets' ? 'Mascotas' : key;
-}
-
-function applyFilter(items, category){
-  if(category === 'all') return items;
-  return items.filter(x => x.industry === category);
-}
-
-function activateCard(category){
-  document.querySelectorAll('.card').forEach(btn=>{
-    btn.setAttribute('aria-pressed', String(btn.dataset.category===category));
-  });
-}
-
-document.getElementById('go-to-map').addEventListener('click', ()=>{
-  document.getElementById('map').scrollIntoView({behavior:'smooth'});
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-theme") || "dark";
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("yc-theme", next);
 });
 
-document.getElementById('locate').addEventListener('click', ()=>{
-  if(!navigator.geolocation){
-    setWarn('Tu navegador no permite geolocalización.');
-    return;
+/* MOBILE NAV */
+const burger = document.getElementById("burger");
+const navMain = document.getElementById("navMain");
+burger.addEventListener("click", () => navMain.classList.toggle("open"));
+
+/* SIMULADOR */
+const fmtCOP = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
+const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+const onlyDigits = (str) => (str || "").replace(/[^\d]/g, "");
+const parseMoney = (s) => parseInt(onlyDigits(s || ""), 10) || 0;
+
+// TEA -> TEM
+const teaToTem = (tea) => Math.pow(1 + tea, 1/12) - 1;
+
+// Cuota método francés
+function cuotaMensual(monto, tem, meses, seguroMensual){
+  if (meses <= 0) return 0;
+  if (tem <= 0){
+    return (monto / meses) + (seguroMensual || 0);
   }
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      setWarn('');
-      const {latitude, longitude} = pos.coords;
-      map.setView([latitude, longitude], 13);
-      // marcador temporal del usuario
-      L.circleMarker([latitude, longitude], {radius:7, color:'#111827', fillOpacity:0.2}).addTo(map);
-    },
-    err => setWarn('No se pudo obtener tu ubicación (permiso denegado o indisponible).'),
-    {enableHighAccuracy:true,timeout:5000,maximumAge:0}
+  const factor = Math.pow(1 + tem, meses);
+  const base = (monto * tem * factor) / (factor - 1);
+  return base + (seguroMensual || 0);
+}
+
+// Totales
+function calcTotales(monto, meses, cuota, seguroMensual){
+  const total = Math.round(cuota) * meses;
+  const totalSeguro = Math.round(seguroMensual || 0) * meses;
+  const intereses = total - monto - totalSeguro;
+  return { total, intereses };
+}
+
+// Estimar meses con pago extra (cuota + extra)
+function mesesConAporte(monto, tem, cuotaTotal){
+  // Fórmula inversa del método francés:
+  // n = - ln(1 - tem * P / cuota) / ln(1 + tem)
+  const cuotaSinCeros = Math.max(0.01, cuotaTotal); // evitar división por cero
+  const inside = 1 - (tem * monto) / cuotaSinCeros;
+  if (inside <= 0 || tem <= 0) return null; // aporte insuficiente para cubrir interés o tasa cero
+  const n = -Math.log(inside) / Math.log(1 + tem);
+  return Math.max(1, Math.round(n));
+}
+
+/* STATE */
+const state = {
+  monto: 1200000,
+  plazo: 12,
+  tea: 0.28,
+  seguro: 0,
+  extra: 0
+};
+Object.assign(state, JSON.parse(localStorage.getItem("yc-sim") || "null") || {});
+
+/* ELEMENTS */
+const montoInput = document.getElementById("montoInput");
+const montoRange = document.getElementById("montoRange");
+const plazoRange = document.getElementById("plazoRange");
+const teaSelect = document.getElementById("teaSelect");
+const seguroInput = document.getElementById("seguroInput");
+const extraInput = document.getElementById("extraInput");
+
+const cuotaTxt = document.getElementById("cuotaTxt");
+const interesesTxt = document.getElementById("interesesTxt");
+const totalTxt = document.getElementById("totalTxt");
+const plazoReducidoTxt = document.getElementById("plazoReducidoTxt");
+
+const ctaWhatsapp = document.getElementById("ctaWhatsapp");
+const ctaContinuar = document.getElementById("ctaContinuar");
+
+/* LIMITES */
+const MIN = Number(montoRange.min);
+const MAX = Number(montoRange.max);
+
+/* INIT */
+function initUI(){
+  montoInput.value = fmtCOP.format(state.monto);
+  montoRange.value = clamp(state.monto, MIN, MAX);
+  plazoRange.value = state.plazo;
+  teaSelect.value = String(state.tea);
+  seguroInput.value = state.seguro ? fmtCOP.format(state.seguro) : "";
+  extraInput.value = state.extra ? fmtCOP.format(state.extra) : "";
+  render();
+}
+
+function legalCheck(modalidad){
+  const caps = LIMITES[modalidad];
+  return { capTEM: EAtoTEM(caps.usuraEA), ibcTEM: EAtoTEM(caps.ibcEA) };
+}
+
+function render(){
+  const tem = teaToTem(state.tea);
+  const cuota = cuotaMensual(state.monto, tem, state.plazo, state.seguro);
+  const { total, intereses } = calcTotales(state.monto, state.plazo, cuota, state.seguro);
+
+  cuotaTxt.textContent = fmtCOP.format(Math.round(cuota));
+  interesesTxt.textContent = fmtCOP.format(Math.max(0, Math.round(intereses)));
+  totalTxt.textContent = fmtCOP.format(Math.round(total));
+
+  // Aporte extra: estimar plazo reducido
+  const cuotaTotal = cuota + (state.extra || 0);
+  const mesesReducidos = mesesConAporte(state.monto, tem, cuotaTotal - (state.seguro || 0)); // cuota sin seguro para cálculo
+  if (mesesReducidos && mesesReducidos < state.plazo){
+    const ahorroMeses = state.plazo - mesesReducidos;
+    plazoReducidoTxt.textContent = `${mesesReducidos} meses (ahorras ~${ahorroMeses})`;
+  } else if (state.extra > 0) {
+    plazoReducidoTxt.textContent = "Aporte insuficiente para reducir plazo";
+  } else {
+    plazoReducidoTxt.textContent = "—";
+  }
+
+  // WhatsApp CTA
+  const msg = encodeURIComponent(
+    `Hola YCredit 👋\n\nQuiero aplicar a mi primer microcrédito.\n\nSimulación:\n- Monto: ${fmtCOP.format(state.monto)}\n- Plazo: ${state.plazo} meses\n- TEA: ${(state.tea*100).toFixed(2)}%\n- Seguro mensual: ${fmtCOP.format(state.seguro)}\n- Aporte extra: ${fmtCOP.format(state.extra)}\n- Cuota estimada: ${fmtCOP.format(Math.round(cuota))}\n- Total a pagar (estimado): ${fmtCOP.format(Math.round(total))}\n\n¿Me ayudan con el proceso?`
   );
+  ctaWhatsapp.href = `https://wa.me/573000000000?text=${msg}`;
+
+  localStorage.setItem("yc-sim", JSON.stringify(state));
+}
+
+montoRange.addEventListener("input", e=>{
+  state.monto = clamp(Number(e.target.value), MIN, MAX);
+  montoInput.value = fmtCOP.format(state.monto);
+  render();
+});
+montoInput.addEventListener("input", e=>{
+  state.monto = clamp(parseMoney(e.target.value), MIN, MAX);
+  e.target.value = fmtCOP.format(state.monto);
+  montoRange.value = state.monto;
+  render();
+});
+plazoRange.addEventListener("input", e=>{
+  state.plazo = Number(e.target.value);
+  render();
+});
+teaSelect.addEventListener("change", e=>{
+  state.tea = Number(e.target.value);
+  render();
+});
+seguroInput.addEventListener("input", e=>{
+  state.seguro = clamp(parseMoney(e.target.value), 0, 200000);
+  e.target.value = state.seguro ? fmtCOP.format(state.seguro) : "";
+  render();
+});
+extraInput.addEventListener("input", e=>{
+  state.extra = clamp(parseMoney(e.target.value), 0, 1000000);
+  e.target.value = state.extra ? fmtCOP.format(state.extra) : "";
+  render();
 });
 
-(async function run(){
-  initMap();
-  const items = await loadData();
-  renderMarkers(items);
+ctaContinuar.addEventListener("click", ()=>{
+  alert("¡Genial! Guardamos tu simulación. En el siguiente paso te pediremos tus datos básicos para evaluación (consentimiento y verificación).");
+});
 
-  // Filtros por tarjetas
-  document.querySelectorAll('.card').forEach(btn => {
-    btn.addEventListener('click', ()=>{
-      const category = btn.dataset.category;
-      activateCard(category);
-      const filtered = applyFilter(items, category);
-      renderMarkers(filtered);
-      if(filtered.length>0){
-        const first = filtered.find(x=>Number.isFinite(Number(x.lat)) && Number.isFinite(Number(x.lon)));
-        if(first) map.setView([Number(first.lat), Number(first.lon)], 12);
-      }
-    });
-  });
-})();
+initUI();
