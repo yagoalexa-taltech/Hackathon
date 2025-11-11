@@ -127,3 +127,5 @@ document.getElementById('locate').addEventListener('click', ()=>{
     });
   });
 })();
+
+// js simulador
