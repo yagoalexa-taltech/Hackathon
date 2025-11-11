@@ -1,0 +1,61 @@
+[{
+    "id": 1,
+    "name": "Huerta La Abundancia",
+    "industry": "food",
+    "city": "Bogotá",
+    "address": "Cll 45 # 18-20",
+    "lat": 4.6456,
+    "lon": -74.0628,
+    "url": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": 2,
+    "name": "EcoBelleza Natural",
+    "industry": "cosmetics",
+    "city": "Chía",
+    "address": "Cra 10 # 12-55",
+    "lat": 4.8672,
+    "lon": -74.0533,
+    "url": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": 3,
+    "name": "Mascotas Verdes",
+    "industry": "pets",
+    "city": "Funza",
+    "address": "Plaza Central Local 5",
+    "lat": 4.716,
+    "lon": -74.215,
+    "url": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": 4,
+    "name": "Mercado Agro Joven",
+    "industry": "food",
+    "city": "Madrid",
+    "address": "Parque Principal",
+    "lat": 4.733,
+    "lon": -74.27,
+    "url": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": 5,
+    "name": "Mercado Frutas",
+    "industry": "food",
+    "city": "Soacha",
+    "address": "Placita Campesina",
+    "lat": 4.583,
+    "lon": -74.225,
+    "url": "https://www.openstreetmap.org/"
+  },
+  {
+    "id": 6,
+    "name": "Mercado Verduras",
+    "industry": "food",
+    "city": "Fusagasugá",
+    "address": "Vía Principal",
+    "lat": 4.343,
+    "lon": -74.383,
+    "url": "https://www.openstreetmap.org/"
+  }
+]
