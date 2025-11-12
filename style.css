@@ -135,6 +135,9 @@ body {
   color: var(--primary-800);
   margin: .25rem 0 1rem
 }
+.aliados img{
+  max-height: 4rem;
+}
 
 .cards {
   display: grid;
@@ -351,7 +354,6 @@ input[type="range"]::-moz-range-track {
 
 /* Map */
 .map-section {
-  max-width: 1320px;
   margin: 1rem auto 2rem;
   padding: 0 1rem;
   background-color: #fff;
@@ -591,6 +593,10 @@ html {
   padding: 1rem;
   text-align: center;
   color: var(--muted)
+}
+.footer small{
+  color: #88ABC2;
+  font-size:12px;
 }
 
 /* Responsive */
