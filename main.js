@@ -294,11 +294,12 @@ document.addEventListener("DOMContentLoaded", () => {
     set("r-categoria", data.categoria);         // Bajo/Mediano/Alto monto (según tu JS)
     set("r-tasa", data.tasaMensual);            // "2.00%" etc.
     set("r-plazo", data.plazoFinal);           // "12 semanas" o "6 meses"
-    set("r-dia", data.diaPago ? `${data.diaPago} de cada mes` : "");   
+    set("r-dia", data.diaPago ? `${data.diaPago} de cada mes` : "");
     set("r-cuota", money(data.cuotaBase));
     set("r-total", money(data.totalPagado));
     set("r-interes", money(data.totalInteres));
     set("r-seguro", money(data.totalSeguro));
+    set("r-confipuntos", data.confipuntos.toLocaleString("es-CO"));
 
     // Muestra la tabla y limpia el contenido previo
     tablaContainer.style.display = "block";
@@ -385,6 +386,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalPagado = tabla.reduce((s, r) => s + parseFloat(r.cuotaTotal), 0);
     const totalInteres = tabla.reduce((s, r) => s + parseFloat(r.interes), 0);
     const totalSeguro = tabla.reduce((s, r) => s + parseFloat(r.seguro), 0);
+    // Calcular ConFiPuntos = 1% del monto
+    const confipuntos = Math.floor(monto * 0.01);
+
 
     return {
       categoria,
@@ -396,7 +400,8 @@ document.addEventListener("DOMContentLoaded", () => {
       totalInteres: totalInteres.toFixed(2),
       totalSeguro: totalSeguro.toFixed(2),
       tabla,
-      diaPago
+      diaPago,
+      confipuntos
     };
   }
 });
