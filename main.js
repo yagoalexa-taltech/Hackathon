@@ -149,15 +149,6 @@ document.getElementById('locate').addEventListener('click', ()=>{
   });
 })();
 
-el.innerHTML = `
-  <h3>${l.name}</h3>
-  <div class="cp-range"><strong>Rango:</strong> ${l.min}–${l.max === 999999 ? '∞' : l.max} pts</div>
-  <div class="cp-badges">
-    <span class="cp-badge">Tasa: ${l.bonusRate}%</span>
-    <span class="cp-badge">Monto extra: ${Number(l.bonusAmount).toLocaleString('es-CO')}</span>
-  </div>
-`;
-
 // Inicializar acordeones de Bootstrap
 document.addEventListener('DOMContentLoaded', function() {
   const accordionButtons = document.querySelectorAll('.accordion-button');
@@ -375,9 +366,9 @@ function defaultCpLevels(){
   ];
 }
 
-function renderConfiPuntos(cfg){
+function renderConfiPuntos(cfg) {
   const cont = document.getElementById('cp-niveles');
-  if(!cont) return;
+  if (!cont) return;
 
   cont.innerHTML = '';
   cfg.levels.forEach(l => {
@@ -394,10 +385,9 @@ function renderConfiPuntos(cfg){
     cont.appendChild(el);
   });
 
-  // Progreso de ejemplo (puedes conectarlo al simulador si quieres)
-  const progreso = 0; // <- inicia en 0
-  updateCpProgress(progreso, cfg);
+  updateCpProgress(0, cfg);
 }
+
 
 function updateCpProgress(points, cfg){
   const maxRef = Math.min(100, (cfg.levels?.[1]?.min ?? 100)); // meta visible inicial
