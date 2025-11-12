@@ -103,6 +103,10 @@ document.getElementById('go-to-map').addEventListener('click', ()=>{
   document.getElementById('map').scrollIntoView({behavior:'smooth'});
 });
 
+document.getElementById('go-to-simulador').addEventListener('click', ()=>{
+  document.getElementById('simulador').scrollIntoView({behavior:'smooth'});
+});
+
 document.getElementById('locate').addEventListener('click', ()=>{
   if(!navigator.geolocation){
     setWarn('Tu navegador no permite geolocalización.');

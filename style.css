@@ -24,7 +24,8 @@
 
 html,
 body {
-  height: 100%
+  height: 100%;
+  background-color: var(--bg-soft);
 }
 
 body {
@@ -125,12 +126,14 @@ body {
 }
 
 .filters h2 {
-  font-size: 1.6rem;
-  margin: .25rem 0
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 300;
+  color: var(--primary-800);
 }
 
 .filters .sub {
-  color: var(--muted);
+  color: var(--primary-800);
   margin: .25rem 0 1rem
 }
 
@@ -141,7 +144,8 @@ body {
 }
 
 .card {
-  background: #f3f6f8;
+  color: var(--bg-soft);
+  background: var(--primary-800);
   border: 2px solid #e5edf2;
   border-radius: 16px;
   height: 120px;
@@ -154,6 +158,11 @@ body {
   box-shadow: var(--shadow);
   transition: transform .15s ease, border-color .2s ease, background .2s ease;
 }
+.card i {
+  font-size: 2.5rem;
+  margin-bottom: .5rem;
+  color: var(--accent)
+}
 
 .card:hover {
   transform: translateY(-2px);
@@ -162,7 +171,12 @@ body {
 
 .card[aria-pressed="true"] {
   outline: 3px solid var(--primary-600);
-  background: #eef6fb
+  background: #eef6fb;
+  color: var(--primary-800);
+}
+
+.card[aria-pressed="true"] i {
+  color: var(--primary-600)
 }
 
 .card.all {
