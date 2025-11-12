@@ -714,10 +714,6 @@ html {
   margin: 0;
 }
 
-.cp-range {
-  align-items: center;
-}
-
 /* Responsive ConFiPuntos */
 @media (max-width: 900px) {
   .cp-grid, .cp-beneficios {
