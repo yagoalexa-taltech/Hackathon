@@ -25,7 +25,6 @@
 html,
 body {
   height: 100%;
-  background-color: var(--bg-soft);
 }
 
 body {
@@ -34,7 +33,14 @@ body {
   color: var(--ink);
   background: var(--white);
 }
-
+.accordion-button {
+  background-color: var(--primary-600);
+  color: var(--white);
+}
+.accordion-button:not(.collapsed) {
+  background-color: var(--primary-600);
+  color: var(--white);
+}
 /* Header / hero */
 .hero {
   background: var(--bg-hero);
@@ -75,6 +81,9 @@ body {
   align-items: center;
   padding: 1rem 1rem 0 2rem;
 }
+.hero-content .image img {
+  max-width: 100%;
+}
 
 .hero-text h1 {
   font-size: 3rem;
@@ -91,6 +100,7 @@ body {
 
 .btn-primary {
   background: var(--accent);
+  color: var(--primary-800);
   border: none;
   border-radius: 10px;
   padding: .75rem 1.1rem;
@@ -125,10 +135,16 @@ body {
 }
 
 .filters h2 {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
-  font-weight: 300;
+  font-weight: 800;
   color: var(--primary-800);
+}
+.simulador-left h2, .faq h2, .aliados h2{
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-800);
+  margin-bottom: 0.25rem;
 }
 
 .filters .sub {
@@ -389,6 +405,15 @@ body {
   .resumen-fila-superior {
     flex-direction: column;
     gap: 0.8rem;
+  }
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+  .nav {
+    justify-content: center;
+  }
+  .hero-content .image img {
+    display: none;
   }
   
   .resumen-value-principal {
