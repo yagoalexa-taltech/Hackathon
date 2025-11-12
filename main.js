@@ -128,4 +128,32 @@ document.getElementById('locate').addEventListener('click', ()=>{
   });
 })();
 
+// Inicializar acordeones de Bootstrap
+document.addEventListener('DOMContentLoaded', function() {
+  const accordionButtons = document.querySelectorAll('.accordion-button');
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-bs-target');
+      const target = document.querySelector(targetId);
+      
+      if (target) {
+        // Cerrar otros items del mismo acordeón
+        const parent = this.closest('.accordion');
+        const otherTargets = parent.querySelectorAll('.accordion-collapse');
+        otherTargets.forEach(el => {
+          if (el.id !== targetId) {
+            el.classList.remove('show');
+          }
+        });
+        
+        // Toggle del item actual
+        target.classList.toggle('show');
+        
+        // Actualizar aria-expanded
+        this.setAttribute('aria-expanded', target.classList.contains('show'));
+      }
+    });
+  });
+});
+
 // js simulador
