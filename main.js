@@ -103,6 +103,10 @@ document.getElementById('go-to-map').addEventListener('click', ()=>{
   document.getElementById('map').scrollIntoView({behavior:'smooth'});
 });
 
+document.getElementById('go-to-simulador').addEventListener('click', ()=>{
+  document.getElementById('simulador').scrollIntoView({behavior:'smooth'});
+});
+
 document.getElementById('locate').addEventListener('click', ()=>{
   if(!navigator.geolocation){
     setWarn('Tu navegador no permite geolocalización.');
@@ -211,40 +215,49 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function mostrarResultados(data) {
-    // Actualiza el resumen de la derecha
-    const resumen = document.getElementById("resumen");
     const tablaContainer = document.getElementById("tablaContainer");
     const tablaBody = document.getElementById("tablaAmortizacion");
 
-    resumen.innerHTML = `
-      <p><strong>Categoría:</strong> ${data.categoria}</p>
-      <p><strong>Tasa mensual:</strong> ${data.tasaMensual}</p>
-      <p><strong>Plazo total:</strong> ${data.plazoFinal}</p>
-      <p><strong>Cuota base:</strong> $${data.cuotaBase}</p>
-      <p><strong>Total pagado:</strong> $${data.totalPagado}</p>
-      <p><strong>Intereses totales:</strong> $${data.totalInteres}</p>
-      <p><strong>Seguro total:</strong> $${data.totalSeguro}</p>
-    `;
+    // Helper para formato COP
+    const money = (n) =>
+      Number(n).toLocaleString("es-CO", {
+        style: "currency",
+        currency: "COP",
+        maximumFractionDigits: 2
+      });
+
+    // Escribe en los placeholders del HTML
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = val;
+    };
+
+    set("r-categoria", data.categoria);         // Bajo/Mediano/Alto monto (según tu JS)
+    set("r-tasa", data.tasaMensual);            // "2.00%" etc.
+    set("r-plazo", data.plazoFinal);            // "12 semanas" o "6 meses"
+    set("r-cuota", money(data.cuotaBase));
+    set("r-total", money(data.totalPagado));
+    set("r-interes", money(data.totalInteres));
+    set("r-seguro", money(data.totalSeguro));
 
     // Muestra la tabla y limpia el contenido previo
     tablaContainer.style.display = "block";
     tablaBody.innerHTML = "";
 
     // Rellena la tabla de amortización
-    data.tabla.forEach(row => {
+    data.tabla.forEach((row) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${row.cuota}</td>
-        <td>$${row.capital}</td>
-        <td>$${row.interes}</td>
-        <td>$${row.seguro}</td>
-        <td><strong>$${row.cuotaTotal}</strong></td>
-        <td>$${row.saldoRestante}</td>
+        <td>${money(row.capital)}</td>
+        <td>${money(row.interes)}</td>
+        <td>${money(row.seguro)}</td>
+        <td><strong>${money(row.cuotaTotal)}</strong></td>
+        <td>${money(row.saldoRestante)}</td>
       `;
       tablaBody.appendChild(tr);
     });
   }
-
 
   // Función base de simulación
   function simularCredito({edad, monto, plazoMeses, tipoPago }) {

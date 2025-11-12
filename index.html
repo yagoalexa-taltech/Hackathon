@@ -41,7 +41,10 @@
         <h1>Crédito agroecológico para tu primer proyecto</h1>
         <p>Te prestamos lo justo para demostrar que eres responsable. Con pagos puntuales, subes tu cupo y accedes a mejores condiciones.
         </p>
-        <button id="go-to-map" class="btn-primary">Simula tu crédito</button>
+        <div class="buttons d-flex align-items-center">
+          <button id="go-to-simulador" class="btn-primary w-50">Simula tu crédito</button>
+          <button id="go-to-map" class="btn w-50 ">Ver mapa</button>
+        </div>
       </div>
       <div class="hero-illu" aria-hidden="true"></div>
     </div>
@@ -54,12 +57,15 @@
       <p class="sub">Encuentra productores con todos los estandares agroecologicos que están más cerca de ti, selecciona una categoría.</p>
       <div class="cards">
         <button class="card" data-category="food" aria-pressed="false">
+          <i class="fa-solid fa-carrot"></i>
           <span class="card-title">Alimentos</span>
         </button>
         <button class="card" data-category="cosmetics" aria-pressed="false">
+          <i class="fa-solid fa-leaf"></i>
           <span class="card-title">Cosméticos</span>
         </button>
         <button class="card" data-category="pets" aria-pressed="false">
+          <i class="fa-solid fa-dog"></i>
           <span class="card-title">Mascotas</span>
         </button>
         <button class="card all" data-category="all" aria-pressed="true" title="Mostrar todos">
@@ -80,23 +86,19 @@
     <!--Fin Mapa-->
     <!-- formulario -->
     <section class="form" id="simulador">
-      <div class="container simulador-grid">
-        <!-- Columna izquierda: Formulario -->
-        <div class="simulador-left">
-          <h2>¡Impulsa tu proyecto agroecológico!</h2>
-          <p>Completa el formulario y descubre en minutos cuánto te prestamos para hacer crecer tu emprendimiento sustentable. No frenes tus ideas por falta de recursos. </p>
+      <div class="container">
 
-          <form id="creditoForm" class="p-4 rounded shadow-sm" style="background: var(--bg-soft)">
-            <div class="mb-3">
-              <label for="nombre" class="form-label fw-bold">Tu nombre o el de tu proyecto</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Ej. Puppy’s" required>
-            </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="simulador-left">
+              <h2>¡Te financiamos tu compra!</h2>
+              <p>Diligencia el formulario y conoce cuánto te prestamos para tu proximo producto. </p>
 
-            <div class="input-group mb-3">
-              <label for="age" class="">¿Cuántos años tienes?</label>
-              <input type="range" class="form-range" id="age" min="18" max="40" value="18">
-              <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18" required>
-            </div>
+              <form id="creditoForm" class="p-4 rounded shadow-sm" style="background: var(--bg-soft)">
+                <div class="mb-3">
+                  <label for="nombre" class="form-label fw-bold">¿Cómo es tu nombre o el de tu negocio?</label>
+                  <input type="text" class="form-control" id="nombre" placeholder="Ej. Puppy’s" required>
+                </div>
 
             <div class="mb-3">
               <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
@@ -121,18 +123,32 @@
               <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
             </div>
 
-            <div class="text-center">
-              <button type="submit" class="btn-primary mt-3 px-4 py-2">¡Vamos por tu crédito! 🚀</button>
-            </div>
-          </form>
-        </div>
+                <div class="mb-3">
+                  <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>
+                  <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
+                </div>
 
-        <!-- Columna derecha: Resumen + Beneficios -->
-        <div class="simulador-right">
-          <h4>💰 Resumen de tu crédito</h4>
-          <div id="resumen">
-            <p>Completa el formulario para ver el resumen de tu crédito :) .</p>
+                <div class="text-center">
+                  <button type="submit" class="btn-primary mt-3 px-4 py-2">¡Vamos por tu crédito! 🚀</button>
+                </div>
+              </form>
+            </div>
           </div>
+          <div class="col-md-4">
+            <div class="simulador-right">
+              <h4>💰 Resumen de tu crédito</h4>
+
+              <!-- Resumen con placeholders -->
+              <div id="resumen" class="p-3 rounded"
+                style="background: var(--bg-soft); border:1px solid var(--primary-600)">
+                <p><strong>Categoría:</strong> <span id="r-categoria">—</span></p>
+                <p><strong>Tasa mensual:</strong> <span id="r-tasa">—</span></p>
+                <p><strong>Plazo total:</strong> <span id="r-plazo">—</span></p>
+                <p><strong>Cuota base:</strong> <span id="r-cuota">—</span></p>
+                <p><strong>Total pagado:</strong> <span id="r-total">—</span></p>
+                <p><strong>Intereses totales:</strong> <span id="r-interes">—</span></p>
+                <p><strong>Seguro total:</strong> <span id="r-seguro">—</span></p>
+              </div>
 
           <div class="beneficios mt-4 p-3 rounded">
             <h5>🎁¿Qué ganas con Confio?</h5>
@@ -143,9 +159,14 @@
             </ul>
           </div>
         </div>
+        <!-- Columna izquierda: Formulario -->
       </div>
+    </section>
 
-      <!-- Tabla de amortización -->
+
+    <!-- Columna derecha: Resumen + Beneficios -->
+
+    <section class="cuotas">
       <div class="container mt-5" id="tablaContainer" style="display:none;">
         <h4 class="text-center mb-3">Tabla de amortización</h4>
         <div class="table-responsive">
@@ -165,6 +186,8 @@
         </div>
       </div>
     </section>
+    <!-- Tabla de amortización -->
+
 
 
     <!-- fin formulario -->
@@ -293,7 +316,7 @@
       </div>
     </section>
     <!-- aliados -->
-    <section class="aliados p-5">
+    <section class="aliados p-5" id="aliados">
       <div class="container">
         <h2 class="text-center">Nuestros Aliados</h2>
         <p class="text-center">Conoce a los productores agroecológicos que confían en Confio para hacer crecer sus proyectos sustentables.</p>
@@ -317,7 +340,7 @@
     <!-- fin FAQs -->
   </main>
   <!-- footer -->
-  <footer class="footer" id="aliados">
+  <footer class="footer">
     <p>ConFío • Datos abiertos • Hecho para jóvenes que consumen responsable</p>
   </footer>
   <!-- fin footer -->
