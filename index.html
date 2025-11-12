@@ -110,7 +110,8 @@
                 <div class="input-group mb-3">
                   <label for="age" class="">¿Cuántos años tienes?</label>
                   <input type="range" class="form-range" id="age" min="18" max="40" value="18">
-                  <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18" required readonly>
+                  <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18" required
+                    readonly>
                 </div>
                 <div class="mb-3">
                   <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
@@ -249,6 +250,51 @@
     </section>
 
     <!-- fin cómo funciona -->
+    
+    <!-- ConFiPuntos -->
+    <section class="confipuntos" id="confipuntos" aria-labelledby="cp-title">
+      <div class="container">
+        <h2 id="cp-title">ConFiPuntos</h2>
+        <p class="subtitulo">Tu puntualidad tiene premio: sube de nivel y desbloquea mejores tasas y montos.</p>
+
+        <!-- Niveles (se llenan desde data.json) -->
+        <div class="cp-grid" id="cp-niveles">
+          <!-- Render dinámico en main.js -->
+        </div>
+
+        <!-- Progreso (demo simple) -->
+        <div class="cp-progress">
+          <div class="cp-progress-header">
+            <strong>Tu progreso</strong>
+            <span id="cp-progreso-label">0 / 100 pts</span>
+          </div>
+          <div class="cp-progress-bar">
+            <div class="cp-progress-fill" id="cp-progreso-fill" style="width: 0%"></div>
+          </div>
+          <p class="cp-nota">Suma puntos pagando a tiempo. Cada cuota pagada puntualmente = puntos acumulados.</p>
+        </div>
+
+        <!-- Beneficios destacados -->
+        <div class="cp-beneficios">
+          <div class="cp-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h4>Acumula</h4>
+            <p>Cada pago puntual suma ConFiPuntos automáticamente.</p>
+          </div>
+          <div class="cp-card">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+            <h4>Sube de nivel</h4>
+            <p>Entre más puntos, mejores tasas y montos disponibles.</p>
+          </div>
+          <div class="cp-card">
+            <i class="fa-solid fa-gift"></i>
+            <h4>Beneficios</h4>
+            <p>Accede a promos y ventajas exclusivas para tu proyecto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Fin ConFiPuntos-->
     <!-- FAQs -->
     <section class="faq p-5">
       <div class="container">
