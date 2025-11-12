@@ -167,6 +167,38 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // Sincronizar control de rango con input de número
+  const ageRange = document.getElementById('age');
+  const ageNumber = document.getElementById('ageNumber');
+
+  if (ageRange && ageNumber) {
+    ageRange.addEventListener('input', function() {
+      ageNumber.value = this.value;
+    });
+
+    ageNumber.addEventListener('input', function() {
+      if (this.value >= 18 && this.value <= 50) {
+        ageRange.value = this.value;
+      }
+    });
+  }
+
+  // Sincronizar control de rango de monto con input de número
+  const amountRange = document.getElementById('amount');
+  const amountNumber = document.getElementById('amountNumber');
+
+  if (amountRange && amountNumber) {
+    amountRange.addEventListener('input', function() {
+      amountNumber.value = this.value;
+    });
+
+    amountNumber.addEventListener('input', function() {
+      if (this.value >= 20000 && this.value <= 5000000) {
+        amountRange.value = this.value;
+      }
+    });
+  }
 });
 
 // js simulador

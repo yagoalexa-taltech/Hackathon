@@ -78,15 +78,22 @@
         <p class="text-center">Diligencia el formulario y así conoce cuanto te prestamos</p>
         <div class="col-md-6">
           <form action="" class="form">
-          <div class="input-group">
+          <div class="input-group mb-3">
             <div class="form-floating">
               <input type="text" class="form-control" id="name" placeholder="El nombre de tu negocio"
                 required>
               <label for="name">¿Cómo es tu nombre o el de tu negocio?</label>
             </div>
           </div>
-          <div class="input-group">
-
+          <div class="input-group mb-3">
+            <label class="" for="age">¿Cuál es tu edad?</label>
+            <input type="range" class="form-range" id="age" min="18" max="40" value="18">
+            <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18">
+          </div>
+          <div class="input-group mb-3">
+            <label class="" for="amount">Cúanto puedes pagar [time]</label>
+            <input type="range" class="form-range" id="amount" min="20000" max="5000000" value="20000">
+            <input type="number" class="form-control" id="amountNumber" min="20000" max="5000000" value="20000">
           </div>
         </form>
         </div>
