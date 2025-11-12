@@ -10,21 +10,34 @@ function initMap(){
   }).addTo(map);
 }
 
-function iconFor(category){
+function iconFor(category) {
   const palette = {
-    food: '#49708A',
-    cosmetics: '#88ABC2',
-    pets: '#CAFF42'
+    food: '#49708A',      // azul profundo
+    cosmetics: '#88ABC2', // azul medio
+    pets: '#CAFF42'       // verde neón
   };
+  const icons = {
+    food: '<i class="fa-solid fa-carrot"></i>',
+    cosmetics: '<i class="fa-solid fa-leaf"></i>',
+    pets: '<i class="fa-solid fa-paw"></i>'
+  };
+
   const color = palette[category] || '#49708A';
-  // simple colored circle SVG icon
+  const iconHtml = icons[category] || '<i class="fa-solid fa-store"></i>';
+
   return L.divIcon({
     className: 'custom-marker',
-    html: `<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-      <circle cx="14" cy="14" r="10" fill="${color}" stroke="white" stroke-width="3"/>
-    </svg>`,
-    iconSize:[28,28],
-    iconAnchor:[14,14]
+    html: `
+      <div class="marker-base">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <path d="M20 0C12 0 6 6 6 14c0 8 14 26 14 26s14-18 14-26c0-8-6-14-14-14z" fill="${color}" stroke="white" stroke-width="3"/>
+        </svg>
+        <div class="marker-icon">${iconHtml}</div>
+      </div>
+    `,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -35]
   });
 }
 
@@ -170,22 +183,147 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+});
+// js simulador
 
-  // Sincronizar control de rango de monto con input de número
-  const amountRange = document.getElementById('amount');
-  const amountNumber = document.getElementById('amountNumber');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("creditoForm");
+  const tablaBody = document.getElementById("tablaAmortizacion");
+  const resultado = document.getElementById("resultado");
+  const resumen = document.getElementById("resumen");
 
-  if (amountRange && amountNumber) {
-    amountRange.addEventListener('input', function() {
-      amountNumber.value = this.value;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const edad = parseInt(document.getElementById("age").value);
+    const monto = parseFloat(document.getElementById("monto").value);
+    const plazoMeses = parseInt(document.getElementById("plazo").value);
+    const tipoPago = document.querySelector('input[name="tipoPago"]:checked').value;
+
+    const data = simularCredito({
+      edad,
+      monto,
+      plazoMeses,
+      tipoPago
     });
 
-    amountNumber.addEventListener('input', function() {
-      if (this.value >= 20000 && this.value <= 5000000) {
-        amountRange.value = this.value;
-      }
+    mostrarResultados(data);
+  });
+
+  function mostrarResultados(data) {
+    // Actualiza el resumen de la derecha
+    const resumen = document.getElementById("resumen");
+    const tablaContainer = document.getElementById("tablaContainer");
+    const tablaBody = document.getElementById("tablaAmortizacion");
+
+    resumen.innerHTML = `
+      <p><strong>Categoría:</strong> ${data.categoria}</p>
+      <p><strong>Tasa mensual:</strong> ${data.tasaMensual}</p>
+      <p><strong>Plazo total:</strong> ${data.plazoFinal}</p>
+      <p><strong>Cuota base:</strong> $${data.cuotaBase}</p>
+      <p><strong>Total pagado:</strong> $${data.totalPagado}</p>
+      <p><strong>Intereses totales:</strong> $${data.totalInteres}</p>
+      <p><strong>Seguro total:</strong> $${data.totalSeguro}</p>
+    `;
+
+    // Muestra la tabla y limpia el contenido previo
+    tablaContainer.style.display = "block";
+    tablaBody.innerHTML = "";
+
+    // Rellena la tabla de amortización
+    data.tabla.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.cuota}</td>
+        <td>$${row.capital}</td>
+        <td>$${row.interes}</td>
+        <td>$${row.seguro}</td>
+        <td><strong>$${row.cuotaTotal}</strong></td>
+        <td>$${row.saldoRestante}</td>
+      `;
+      tablaBody.appendChild(tr);
     });
+  }
+
+
+  // Función base de simulación
+  function simularCredito({edad, monto, plazoMeses, tipoPago }) {
+    let categoria = "";
+    let tasaMensual = 0;
+    let plazoMax = 0;
+
+    if (monto >= 20000 && monto <= 200000) {
+      categoria = "Bajo monto";
+      tasaMensual = 0.02;
+      plazoMax = 3;
+    } else if (monto > 200000 && monto <= 1000000) {
+      categoria = "Mediano monto";
+      tasaMensual = 0.015;
+      plazoMax = 6;
+    } else if (monto > 1000000 && monto <= 5000000) {
+      categoria = "Alto monto";
+      tasaMensual = 0.01;
+      plazoMax = 24;
+    } else {
+      alert("Monto fuera del rango permitido (20.000 a 5.000.000)");
+      return;
+    }
+
+    if (plazoMeses > plazoMax) {
+      alert(`El plazo máximo para ${categoria} es ${plazoMax} meses. Se ajustará automáticamente.`);
+      plazoMeses = plazoMax;
+    }
+
+    let tasa = tasaMensual;
+    let cuotas = plazoMeses;
+
+    if (tipoPago === "Semanal") {
+      cuotas = plazoMeses * 4;
+      tasa = tasaMensual / 4;
+    }
+
+    const cuota = (monto * tasa) / (1 - Math.pow(1 + tasa, -cuotas));
+
+    let porcentajeSeguro = 0;
+    if (edad >= 18 && edad <= 30) porcentajeSeguro = 0.05;
+    else if (edad >= 31 && edad <= 40) porcentajeSeguro = 0.10;
+    else if (edad >= 41) porcentajeSeguro = 0.15;
+
+    let saldo = monto;
+    let tabla = [];
+
+    for (let i = 1; i <= cuotas; i++) {
+      let interes = saldo * tasa;
+      let capital = cuota - interes;
+      saldo -= capital;
+      let seguro = cuota * porcentajeSeguro;
+      let cuotaTotal = cuota + seguro;
+
+      tabla.push({
+        cuota: i,
+        capital: capital.toFixed(2),
+        interes: interes.toFixed(2),
+        seguro: seguro.toFixed(2),
+        cuotaTotal: cuotaTotal.toFixed(2),
+        saldoRestante: saldo > 0 ? saldo.toFixed(2) : "0.00"
+      });
+    }
+
+    const totalPagado = tabla.reduce((s, r) => s + parseFloat(r.cuotaTotal), 0);
+    const totalInteres = tabla.reduce((s, r) => s + parseFloat(r.interes), 0);
+    const totalSeguro = tabla.reduce((s, r) => s + parseFloat(r.seguro), 0);
+
+    return {
+      categoria,
+      tasaMensual: (tasaMensual * 100).toFixed(2) + "%",
+      plazoFinal: cuotas + (tipoPago === "Semanal" ? " semanas" : " meses"),
+      cuotaBase: cuota.toFixed(2),
+      porcentajeSeguro: (porcentajeSeguro * 100) + "%",
+      totalPagado: totalPagado.toFixed(2),
+      totalInteres: totalInteres.toFixed(2),
+      totalSeguro: totalSeguro.toFixed(2),
+      tabla
+    };
   }
 });
 
-// js simulador
