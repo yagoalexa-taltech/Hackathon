@@ -132,9 +132,17 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="monto" class="form-label fw-bold">¿Cuánto vas a necesitar? (COP)</label>
-                  <input type="number" class="form-control" id="monto" min="20000" max="5000000" step="10000"
-                    value="1000000" required>
+                  <label for="montoDisplay" class="form-label fw-bold">¿Cuánto vas a necesitar? (COP)</label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <!-- Campo visible para el usuario: muestra formato con miles y signo. -->
+                    <input type="text" class="form-control" id="montoDisplay" inputmode="numeric" aria-label="Monto en pesos" value="1.000.000" required>
+                    <!-- Campo oculto que mantiene el valor numérico real para el formulario y la lógica -->
+                    <input type="hidden" id="monto" name="monto" value="1000000" min="20000" max="5000000" step="10000">
+
+                   
+                  </div>
+                  <small> Monto desde 20.000 hasta 5.000.000</small>
                 </div>
                 <div class="mb-3">
                   <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>

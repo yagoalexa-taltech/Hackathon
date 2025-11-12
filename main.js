@@ -200,6 +200,50 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultado = document.getElementById("resultado");
   const resumen = document.getElementById("resumen");
 
+  // --- Formato y sincronización para el monto (visual vs valor real) ---
+  // El campo visible es `#montoDisplay` (texto con separadores). El campo real
+  // enviado y usado por la lógica es `#monto` (hidden, numérico).
+  const montoHidden = document.getElementById('monto');
+  const montoDisplay = document.getElementById('montoDisplay');
+  const M_MIN = Number(montoHidden?.getAttribute('min') || 20000);
+  const M_MAX = Number(montoHidden?.getAttribute('max') || 5000000);
+
+  const formatNumber = (v) => {
+    // formatea sin símbolo (el $ está en el input-group)
+    try {
+      return Number(v).toLocaleString('es-CO', {maximumFractionDigits: 0});
+    } catch (e) { return v; }
+  };
+
+  const parseNumber = (s) => {
+    if (!s && s !== 0) return 0;
+    const n = Number(String(s).replace(/[^0-9]/g, ''));
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  if (montoHidden && montoDisplay) {
+    // Inicializa visual
+    montoDisplay.value = formatNumber(montoHidden.value || montoHidden.getAttribute('value') || 0);
+
+    // Cuando el usuario edita la vista, actualizamos el hidden (sin formatear aún)
+    montoDisplay.addEventListener('input', (e) => {
+      const v = parseNumber(e.target.value);
+      // mantener en rango
+      const clamped = Math.max(M_MIN, Math.min(M_MAX, v || 0));
+      montoHidden.value = clamped;
+    });
+
+    // Al perder foco, mostramos la versión formateada
+    montoDisplay.addEventListener('blur', () => {
+      montoDisplay.value = formatNumber(montoHidden.value);
+    });
+
+    // Al enfocar, mostramos el número sin separadores para facilitar edición
+    montoDisplay.addEventListener('focus', () => {
+      montoDisplay.value = String(parseNumber(montoHidden.value));
+    });
+  }
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
