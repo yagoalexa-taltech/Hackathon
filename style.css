@@ -38,7 +38,6 @@ body {
 /* Header / hero */
 .hero {
   background: var(--bg-hero);
-  padding-bottom: 1rem;
 }
 
 .nav {
@@ -74,7 +73,7 @@ body {
   grid-template-columns: 1.2fr .8fr;
   gap: 2rem;
   align-items: center;
-  padding: 1rem 1rem 2rem;
+  padding: 1rem 1rem 0 2rem;
 }
 
 .hero-text h1 {
@@ -356,7 +355,8 @@ input[type="range"]::-moz-range-track {
 /* Map */
 .map-section {
   margin: 1rem auto 2rem;
-  padding: 0 1rem
+  padding: 0 1rem;
+  background-color: #fff;
 }
 
 #map {
