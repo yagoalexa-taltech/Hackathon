@@ -1,4 +1,6 @@
-[{
+{
+  "items": [
+    {
     "id": 1,
     "name": "Huerta La Abundancia",
     "industry": "food",
@@ -167,6 +169,15 @@
     "lat": 4.71427396543128,
     "lon": -74.21423521012967,
     "url": "https://www.openstreetmap.org/"
+  } 
+  ],
+  "confipuntos": {
+    "levels": [
+      { "name": "Semilla", "min": 0,   "max": 99,   "bonusRate": 0.0,  "bonusAmount": 0 },
+      { "name": "Brotes",  "min": 100, "max": 299,  "bonusRate": -0.2, "bonusAmount": 10000 },
+      { "name": "Raíces",  "min": 300, "max": 699,  "bonusRate": -0.4, "bonusAmount": 30000 },
+      { "name": "Hoja",    "min": 700, "max": 999,  "bonusRate": -0.6, "bonusAmount": 60000 },
+      { "name": "Bosque",  "min": 1000,"max": 999999,"bonusRate": -1.0,"bonusAmount": 100000 }
+    ]
   }
-  
-]
+}

@@ -81,7 +81,9 @@ function renderMarkers(items){
       markers.push(m);
     }
   });
-  counterEl.textContent = `${items.length} spot${items.length===1?'':''}`;
+  counterEl.textContent = `${items.length} sitio${items.length === 1 ? '' : 's'} para comprar`;
+  setWarn(items.length === 0 ? 'No hay sitios disponibles en esta categoría.' : '');
+
 }
 
 function labelIndustry(key){
@@ -129,6 +131,8 @@ document.getElementById('locate').addEventListener('click', ()=>{
   initMap();
   const items = await loadData();
   renderMarkers(items);
+  const cpCfg = await loadConfiConfig();
+  renderConfiPuntos(cpCfg); 
 
   // Filtros por tarjetas
   document.querySelectorAll('.card').forEach(btn => {
@@ -144,6 +148,15 @@ document.getElementById('locate').addEventListener('click', ()=>{
     });
   });
 })();
+
+el.innerHTML = `
+  <h3>${l.name}</h3>
+  <div class="cp-range"><strong>Rango:</strong> ${l.min}–${l.max === 999999 ? '∞' : l.max} pts</div>
+  <div class="cp-badges">
+    <span class="cp-badge">Tasa: ${l.bonusRate}%</span>
+    <span class="cp-badge">Monto extra: ${Number(l.bonusAmount).toLocaleString('es-CO')}</span>
+  </div>
+`;
 
 // Inicializar acordeones de Bootstrap
 document.addEventListener('DOMContentLoaded', function() {
@@ -339,4 +352,59 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 });
+// === ConFiPuntos ===
+async function loadConfiConfig(){
+  try{
+    const res = await fetch('./data.json',{cache:'no-store'});
+    const data = await res.json();
+    // soporta data como array (legacy) u objeto con items+confipuntos (nuevo)
+    if (Array.isArray(data)) return { levels: defaultCpLevels() };
+    return { levels: data.confipuntos?.levels ?? defaultCpLevels() };
+  }catch{
+    return { levels: defaultCpLevels() };
+  }
+}
 
+function defaultCpLevels(){
+  return [
+    { name: "Semilla", min: 0,   max: 99,  bonusRate: 0.0,  bonusAmount: 0 },
+    { name: "Brotes",  min: 100, max: 299, bonusRate: -0.2, bonusAmount: 10_000 },
+    { name: "Raíces",  min: 300, max: 699, bonusRate: -0.4, bonusAmount: 30_000 },
+    { name: "Hoja",    min: 700, max: 999, bonusRate: -0.6, bonusAmount: 60_000 },
+    { name: "Bosque",  min: 1000, max: 999999, bonusRate: -1.0, bonusAmount: 100_000 }
+  ];
+}
+
+function renderConfiPuntos(cfg){
+  const cont = document.getElementById('cp-niveles');
+  if(!cont) return;
+
+  cont.innerHTML = '';
+  cfg.levels.forEach(l => {
+    const el = document.createElement('div');
+    el.className = 'cp-level';
+    el.innerHTML = `
+      <h3>${l.name}</h3>
+      <p class="m-0"><strong>Rango:</strong> ${l.min}–${l.max === 999999 ? '∞' : l.max} pts</p>
+      <div class="cp-badges">
+        <span class="cp-badge">Tasa: ${l.bonusRate}%</span>
+        <span class="cp-badge">Monto extra: ${Number(l.bonusAmount).toLocaleString('es-CO')}</span>
+      </div>
+    `;
+    cont.appendChild(el);
+  });
+
+  // Progreso de ejemplo (puedes conectarlo al simulador si quieres)
+  const progreso = 0; // <- inicia en 0
+  updateCpProgress(progreso, cfg);
+}
+
+function updateCpProgress(points, cfg){
+  const maxRef = Math.min(100, (cfg.levels?.[1]?.min ?? 100)); // meta visible inicial
+  const pct = Math.max(0, Math.min(100, (points / maxRef) * 100));
+  const fill = document.getElementById('cp-progreso-fill');
+  const label = document.getElementById('cp-progreso-label');
+  if(fill) fill.style.width = `${pct}%`;
+  if(label) label.textContent = `${points} / ${maxRef} pts`;
+}
+ 

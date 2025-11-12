@@ -732,7 +732,145 @@ html {
   }
 }
 
+/* ConFiPuntos */
+.confipuntos {
+  background: var(--white);
+  padding: 2rem 1rem;
+  color: var(--ink);
+}
 
+.confipuntos h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-800);
+  margin-bottom: .25rem;
+}
+
+.confipuntos .subtitulo {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+}
+
+.cp-level {
+  background: var(--bg-soft);
+  border: 2px solid var(--primary-600);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1rem 1.2rem;
+}
+
+.cp-level h3 {
+  margin: 0 0 .25rem 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary-800);
+}
+
+.cp-level .cp-badges {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+
+.cp-badge {
+  background: #eef6fb;
+  color: var(--primary-800);
+  border: 1px solid var(--primary-600);
+  border-radius: 999px;
+  padding: .15rem .6rem;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.cp-progress {
+  max-width: 1100px;
+  margin: 0 auto 2rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--primary-600);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.cp-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+  color: var(--primary-800);
+}
+
+.cp-progress-bar {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #e8f1f7, #f2fbdd);
+  overflow: hidden;
+  border: 1px solid var(--primary-600);
+}
+
+.cp-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width .4s ease;
+}
+
+.cp-nota {
+  margin-top: .5rem;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.cp-beneficios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.cp-card {
+  background: var(--white);
+  border: 2px solid var(--primary-600);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.cp-card i {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: .5rem;
+}
+
+.cp-card h4 {
+  color: var(--primary-800);
+  margin-bottom: .25rem;
+  font-weight: 800;
+}
+
+.cp-card p {
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Responsive ConFiPuntos */
+@media (max-width: 900px) {
+  .cp-grid, .cp-beneficios {
+    grid-template-columns: 1fr;
+  }
+}
 
 
 /* Footer */
