@@ -98,60 +98,90 @@
               <label for="nombre" class="form-label fw-bold">¿Cómo es tu nombre o el de tu negocio?</label>
               <input type="text" class="form-control" id="nombre" placeholder="Ej. Puppy’s" required>
             </div>
+      <div class="container">
 
-            <div class="input-group mb-3">
-              <label for="age" class="">¿Cuántos años tienes?</label>
-              <input type="range" class="form-range" id="age" min="18" max="40" value="18">
-              <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18" required>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="simulador-left">
+              <h2>¡Te financiamos tu compra!</h2>
+              <p>Diligencia el formulario y conoce cuánto te prestamos para tu proximo producto. </p>
+
+              <form id="creditoForm" class="p-4 rounded shadow-sm" style="background: var(--bg-soft)">
+                <div class="mb-3">
+                  <label for="nombre" class="form-label fw-bold">¿Cómo es tu nombre o el de tu negocio?</label>
+                  <input type="text" class="form-control" id="nombre" placeholder="Ej. Puppy’s" required>
+                </div>
+
+                <div class="input-group mb-3">
+                  <label for="age" class="">¿Cuántos años tienes?</label>
+                  <input type="range" class="form-range" id="age" min="18" max="40" value="18">
+                  <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipoPago" id="mensual" value="Mensual" checked>
+                    <label class="form-check-label" for="mensual">Mensualmente</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipoPago" id="semanal" value="Semanal">
+                    <label class="form-check-label" for="semanal">Semanalmente</label>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="monto" class="form-label fw-bold">¿Cuánto dinero deseas solicitar? (COP)</label>
+                  <input type="number" class="form-control" id="monto" min="20000" max="5000000" step="10000"
+                    value="1000000" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>
+                  <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn-primary mt-3 px-4 py-2">¡Vamos por tu crédito! 🚀</button>
+                </div>
+              </form>
             </div>
-
-            <div class="mb-3">
-              <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="tipoPago" id="mensual" value="Mensual" checked>
-                <label class="form-check-label" for="mensual">Mensualmente</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="tipoPago" id="semanal" value="Semanal">
-                <label class="form-check-label" for="semanal">Semanalmente</label>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="monto" class="form-label fw-bold">¿Cuánto dinero deseas solicitar? (COP)</label>
-              <input type="number" class="form-control" id="monto" min="20000" max="5000000" step="10000"
-                value="1000000" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>
-              <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
-            </div>
-
-            <div class="text-center">
-              <button type="submit" class="btn-primary mt-3 px-4 py-2">¡Vamos por tu crédito! 🚀</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Columna derecha: Resumen + Beneficios -->
-        <div class="simulador-right">
-          <h4>💰 Resumen de tu crédito</h4>
-          <div id="resumen">
-            <p>Completa el formulario para ver el resumen de tu crédito :) .</p>
           </div>
+          <div class="col-md-4">
+            <div class="simulador-right">
+              <h4>💰 Resumen de tu crédito</h4>
 
-          <div class="beneficios mt-4 p-3 rounded">
-            <h5>🎁 Beneficios</h5>
-            <ul>
-              <li>Tasas preferenciales para tus productos agroecológicos</li>
-              <li>Bonificación por pago puntual</li>
-              <li>Gana ConFiPuntos </li>
-            </ul>
+              <!-- Resumen con placeholders -->
+              <div id="resumen" class="p-3 rounded"
+                style="background: var(--bg-soft); border:1px solid var(--primary-600)">
+                <p><strong>Categoría:</strong> <span id="r-categoria">—</span></p>
+                <p><strong>Tasa mensual:</strong> <span id="r-tasa">—</span></p>
+                <p><strong>Plazo total:</strong> <span id="r-plazo">—</span></p>
+                <p><strong>Cuota base:</strong> <span id="r-cuota">—</span></p>
+                <p><strong>Total pagado:</strong> <span id="r-total">—</span></p>
+                <p><strong>Intereses totales:</strong> <span id="r-interes">—</span></p>
+                <p><strong>Seguro total:</strong> <span id="r-seguro">—</span></p>
+              </div>
+
+              <div class="beneficios mt-4 p-3 rounded">
+                <h5>🎁 Beneficios</h5>
+                <ul>
+                  <li>Tasas preferenciales para tus productos agroecológicos</li>
+                  <li>Bonificación por pago puntual</li>
+                  <li>Gana ConFiPuntos</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- Columna izquierda: Formulario -->
       </div>
-      <!-- Tabla de amortización -->
+    </section>
+
+
+    <!-- Columna derecha: Resumen + Beneficios -->
+
+    <section class="cuotas">
       <div class="container mt-5" id="tablaContainer" style="display:none;">
         <h4 class="text-center mb-3">Tabla de amortización</h4>
         <div class="table-responsive">
@@ -171,6 +201,8 @@
         </div>
       </div>
     </section>
+    <!-- Tabla de amortización -->
+
 
 
     <!-- fin formulario -->

@@ -74,8 +74,8 @@
     "industry": "pets",
     "city": "Funza",
     "address": "Cra 9 # 14-20",
-    "lat": 4.713,
-    "lon": -74.210,
+    "lat": 4.71287176552042,
+    "lon": -74.20986192127621,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -83,9 +83,9 @@
     "name": "Eco Tienda Natural",
     "industry": "cosmetics",
     "city": "Funza",
-    "address": "Cl 13 # 9-45",
-    "lat": 4.715,
-    "lon": -74.213,
+    "address": "Cra 13 # 9-45",
+    "lat": 4.714974964092036,
+    "lon": -74.21535631534289,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -93,9 +93,9 @@
     "name": "Mercado Campesino Funza",
     "industry": "food",
     "city": "Funza",
-    "address": "Parque Principal",
-    "lat": 4.716,
-    "lon": -74.211,
+    "address": "Cl. 13 #13-75",
+    "lat": 4.716552154734511,
+    "lon": -74.21270590713246,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -104,8 +104,8 @@
     "industry": "food",
     "city": "Madrid",
     "address": "Cl 7 # 6-32",
-    "lat": 4.732,
-    "lon": -74.265,
+    "lat": 4.733645171128736,
+    "lon": -74.2629790636048,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -113,19 +113,19 @@
     "name": "Verde Vivo Cosmética",
     "industry": "cosmetics",
     "city": "Madrid",
-    "address": "Av 6 # 4-25",
-    "lat": 4.733,
-    "lon": -74.259,
+    "address": "Cl 6A # 4-25",
+    "lat": 4.732252061443365,
+    "lon": -74.26245679206252,
     "url": "https://www.openstreetmap.org/"
   },
   {
     "id": 13,
-    "name": "AgroMarket Madrid",
-    "industry": "food",
+    "name": "MascoMarket Madrid",
+    "industry": "pets",
     "city": "Madrid",
-    "address": "Centro Comercial La Estación",
-    "lat": 4.735,
-    "lon": -74.258,
+    "address": "Cra. 14b # 6-45",
+    "lat": 4.734653795549242,
+    "lon": -74.27056827155035,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -134,8 +134,8 @@
     "industry": "food",
     "city": "Mosquera",
     "address": "Cl 3 # 4-12",
-    "lat": 4.678,
-    "lon": -74.233,
+    "lat": 4.7073240992006005,
+    "lon": -74.23126826879336,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -143,9 +143,9 @@
     "name": "EcoMascotas Natural",
     "industry": "pets",
     "city": "Mosquera",
-    "address": "Cra 5 # 6-22",
-    "lat": 4.680,
-    "lon": -74.236,
+    "address": "Cra. 5D # 6-22",
+    "lat": 4.705871307318739,
+    "lon": -74.21410592127629,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -153,9 +153,9 @@
     "name": "Mercado Agroecológico Mosquera",
     "industry": "food",
     "city": "Mosquera",
-    "address": "Plaza Central",
-    "lat": 4.679,
-    "lon": -74.232,
+    "address": "Cl. 10a #3-12",
+    "lat": 4.710548377496248,
+    "lon": -74.2245190359682,
     "url": "https://www.openstreetmap.org/"
   },
   {
@@ -163,9 +163,9 @@
     "name": "Vida Natural y Orgánica",
     "industry": "cosmetics",
     "city": "Funza",
-    "address": "Cra 12 # 15-18",
-    "lat": 4.718,
-    "lon": -74.214,
+    "address": "Cra 12 # 10-40",
+    "lat": 4.71427396543128,
+    "lon": -74.21423521012967,
     "url": "https://www.openstreetmap.org/"
   }
   
