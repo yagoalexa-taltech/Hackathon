@@ -142,29 +142,49 @@
           </div>
           <div class="col-md-4">
             <div class="simulador-right">
-              <h4>💰 Resumen de tu crédito</h4>
+              <h4 class="resumen-titulo">💰 Resumen de tu crédito</h4>
 
-              <!-- Resumen con placeholders -->
-              <div id="resumen" class="p-3 rounded"
-                style="background: var(--bg-soft); border:1px solid var(--primary-600)">
-                <p><strong>Categoría:</strong> <span id="r-categoria">—</span></p>
-                <p><strong>Tasa mensual:</strong> <span id="r-tasa">—</span></p>
-                <p><strong>Plazo total:</strong> <span id="r-plazo">—</span></p>
-                <p><strong>Cuota base:</strong> <span id="r-cuota">—</span></p>
-                <p><strong>Intereses totales:</strong> <span id="r-interes">—</span></p>
-                <p><strong>Seguro total:</strong> <span id="r-seguro">—</span></p>
+              <!-- Resumen principal -->
+              <div id="resumen" class="resumen-card">
+                <div class="resumen-item-destacado">
+                <div class="resumen-item">
+                  <span class="resumen-label">Tu pagaras:</span>
+                  <span class="resumen-value-grande" id="r-cuota"></span>
+                </div>
+                <div class="resumen-item">
+                  <span class="resumen-label">Categoría:</span>
+                  <span class="resumen-value" id="r-categoria"></span>
+                </div>
+                <div class="resumen-item">
+                  <span class="resumen-label">Tasa mensual:</span>
+                  <span class="resumen-value" id="r-tasa"></span>
+                </div>
+                <div class="resumen-item">
+                  <span class="resumen-label">Plazo total:</span>
+                  <span class="resumen-value" id="r-plazo"></span>
+                </div>
+              </div>
+              <!-- Sección inferior: ConfiPuntos y Beneficios -->
+              <div class="confipuntos-section">
+                <h5 class="confipuntos-titulo">Ganarás conFipuntos</h5>
+                <div class="confipuntos-valor">
+                  <span class="resume-value" id="r-confipuntos">5.000</span>
+                </div>
+                <p class="confipuntos-desc">que podrás hacer efectivo bla bla bla y aumentarás tu cupo entre mejores hábitos de pago tengas</p>
               </div>
 
-              <div class="beneficios mt-4 p-3 rounded">
-                <h5>🎁¿Qué ganas con Confio?</h5>
-                <ul>
-                  <li>Acumula ConfiPuntos y accede a mejores condiciones.</li>
-                  <li>Mejores montos cuando pagas a tiempo - Tu puntualidad se premia</li>
-                  <li>Tasas preferenciales para tu proyecto agroecologico sustentable.</li>
-                </ul>
+              <div class="beneficios-section">
+                <h5 class="beneficios-titulo">Beneficios</h5>
+                <div class="beneficio-item">
+                  <i class="fa-solid fa-truck"></i>
+                  <span>Redime los puntos en bla bla bla</span>
+                </div>
+                <div class="beneficio-item">
+                  <i class="fa-solid fa-calendar-check"></i>
+                  <span>Escoge el día del mes que quieres pagar</span>
+                </div>
               </div>
             </div>
-            <!-- Columna izquierda: Formulario -->
           </div>
     </section>
 
