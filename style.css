@@ -136,6 +136,9 @@ body {
   color: var(--primary-800);
   margin: .25rem 0 1rem
 }
+.aliados img{
+  max-height: 4rem;
+}
 
 .cards {
   display: grid;
@@ -591,6 +594,10 @@ html {
   padding: 1rem;
   text-align: center;
   color: var(--muted)
+}
+.footer small{
+  color: #88ABC2;
+  font-size:12px;
 }
 
 /* Responsive */
