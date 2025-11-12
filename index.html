@@ -39,7 +39,8 @@
     <div class="hero-content">
       <div class="hero-text">
         <h1>Crédito agroecológico para tu primer proyecto</h1>
-        <p>Te prestamos lo justo para demostrar que eres responsable. Con pagos puntuales, subes tu cupo y accedes a mejores condiciones.
+        <p>Te prestamos lo justo para demostrar que eres responsable. Con pagos puntuales, subes tu cupo y accedes a
+          mejores condiciones.
         </p>
         <div class="buttons d-flex align-items-center">
           <button id="go-to-simulador" class="btn-primary w-50">Simula tu crédito</button>
@@ -54,7 +55,8 @@
     <!--Selecciona una categoria-->
     <section class="filters" aria-labelledby="titulo-filtros">
       <h2 id="titulo-filtros">¿Qué tipo de productos buscas?</h2>
-      <p class="sub">Encuentra productores con todos los estandares agroecologicos que están más cerca de ti, selecciona una categoría.</p>
+      <p class="sub">Encuentra productores con todos los estandares agroecologicos que están más cerca de ti, selecciona
+        una categoría.</p>
       <div class="cards">
         <button class="card" data-category="food" aria-pressed="false">
           <i class="fa-solid fa-carrot"></i>
@@ -76,12 +78,18 @@
     <!--Fin Categoria-->
     <!--Mapa-->
     <section id="mapa" class="map-section" aria-label="Mapa interactivo de puntos agroecológicos">
-      <div id="map"></div>
-      <div id="map-meta" class="map-meta">
-        <span id="counter">0 Sitios para comprar</span>
-        <button id="locate" class="btn-secondary" title="Centrar cerca de mí">Cerca de mí</button>
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            <div id="map"></div>
+            <div id="map-meta" class="map-meta">
+              <span id="counter">0 Sitios para comprar</span>
+              <button id="locate" class="btn-secondary" title="Centrar cerca de mí">Cerca de mí</button>
+            </div>
+            <div id="warn" role="status" aria-live="polite" class="warn" hidden></div>
+          </div>
+        </div>
       </div>
-      <div id="warn" role="status" aria-live="polite" class="warn" hidden></div>
     </section>
     <!--Fin Mapa-->
     <!-- formulario -->
@@ -100,28 +108,28 @@
                   <input type="text" class="form-control" id="nombre" placeholder="Ej. Puppy’s" required>
                 </div>
 
-            <div class="mb-3">
-              <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="tipoPago" id="mensual" value="Mensual" checked>
-                <label class="form-check-label" for="mensual">Semanalmente</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="tipoPago" id="semanal" value="Semanal">
-                <label class="form-check-label" for="semanal">Mensualmente</label>
-              </div>
-            </div>
+                <div class="mb-3">
+                  <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipoPago" id="mensual" value="Mensual" checked>
+                    <label class="form-check-label" for="mensual">Semanalmente</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipoPago" id="semanal" value="Semanal">
+                    <label class="form-check-label" for="semanal">Mensualmente</label>
+                  </div>
+                </div>
 
-            <div class="mb-3">
-              <label for="monto" class="form-label fw-bold">¿Cuánto puedes pagar cómodamente? (COP)</label>
-              <input type="number" class="form-control" id="monto" min="20000" max="5000000" step="10000"
-                value="1000000" required>
-            </div>
+                <div class="mb-3">
+                  <label for="monto" class="form-label fw-bold">¿Cuánto puedes pagar cómodamente? (COP)</label>
+                  <input type="number" class="form-control" id="monto" min="20000" max="5000000" step="10000"
+                    value="1000000" required>
+                </div>
 
-            <div class="mb-3">
-              <label for="plazo" class="form-label fw-bold">¿A cuántos meses?</label>
-              <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
-            </div>
+                <div class="mb-3">
+                  <label for="plazo" class="form-label fw-bold">¿A cuántos meses?</label>
+                  <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
+                </div>
 
                 <div class="mb-3">
                   <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>
@@ -150,17 +158,17 @@
                 <p><strong>Seguro total:</strong> <span id="r-seguro">—</span></p>
               </div>
 
-          <div class="beneficios mt-4 p-3 rounded">
-            <h5>🎁¿Qué ganas con Confio?</h5>
-            <ul>
-              <li>Acumula ConfiPuntos y accede a mejores condiciones.</li>
-              <li>Mejores montos cuando pagas a tiempo - Tu puntualidad se premia</li>
-              <li>Tasas preferenciales para tu proyecto agroecologico sustentable.</li>
-            </ul>
+              <div class="beneficios mt-4 p-3 rounded">
+                <h5>🎁¿Qué ganas con Confio?</h5>
+                <ul>
+                  <li>Acumula ConfiPuntos y accede a mejores condiciones.</li>
+                  <li>Mejores montos cuando pagas a tiempo - Tu puntualidad se premia</li>
+                  <li>Tasas preferenciales para tu proyecto agroecologico sustentable.</li>
+                </ul>
+              </div>
+            </div>
+            <!-- Columna izquierda: Formulario -->
           </div>
-        </div>
-        <!-- Columna izquierda: Formulario -->
-      </div>
     </section>
 
 
@@ -209,7 +217,8 @@
             <div>
               <h4>Pide tu crédito</h4>
               <p>
-                Completa nuestro simulador con tus datos básicos: nombre de tu negocio, edad, capacidad de pago (semanal o mensual), monto que puedes pagar y plazo deseado. En segundos conocerás tu monto disponible.
+                Completa nuestro simulador con tus datos básicos: nombre de tu negocio, edad, capacidad de pago (semanal
+                o mensual), monto que puedes pagar y plazo deseado. En segundos conocerás tu monto disponible.
               </p>
             </div>
           </div>
@@ -219,7 +228,8 @@
             <div>
               <h4>Paga puntual</h4>
               <p>
-                Realiza tus pagos de forma responsable en las fechas acordadas para mantener tu historial crediticio saludable.
+                Realiza tus pagos de forma responsable en las fechas acordadas para mantener tu historial crediticio
+                saludable.
               </p>
             </div>
           </div>
@@ -229,7 +239,8 @@
             <div>
               <h4>Gana ConFiPuntos</h4>
               <p>
-                 Cada pago puntual te permite acumular ConfiPuntos, que te darán acceso a mejores condiciones de crédito, montos más altos y beneficios exclusivos para hacer crecer tu proyecto agroecológico.
+                Cada pago puntual te permite acumular ConfiPuntos, que te darán acceso a mejores condiciones de crédito,
+                montos más altos y beneficios exclusivos para hacer crecer tu proyecto agroecológico.
               </p>
             </div>
           </div>
@@ -256,7 +267,8 @@
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <p>El monto depende de tu capacidad de pago y perfil. Usa nuestro simulador para conocer en minutos cuánto puedes obtener. Es rápido, gratis y sin compromiso.</p>
+                <p>El monto depende de tu capacidad de pago y perfil. Usa nuestro simulador para conocer en minutos
+                  cuánto puedes obtener. Es rápido, gratis y sin compromiso.</p>
               </div>
             </div>
           </div>
@@ -269,7 +281,9 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <p>Es nuestro sistema de recompensas. Cada vez que pagas puntual, sumas puntos que te dan acceso a mejores tasas, montos más altos y beneficios exclusivos para hacer crecer tu proyecto agroecológico.</p>
+                <p>Es nuestro sistema de recompensas. Cada vez que pagas puntual, sumas puntos que te dan acceso a
+                  mejores tasas, montos más altos y beneficios exclusivos para hacer crecer tu proyecto agroecológico.
+                </p>
               </div>
             </div>
           </div>
@@ -282,11 +296,12 @@
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <p>Recibirás respuesta en pocos minutos después de completar el formulario. Sin esperas, sin trámites complicados.</p>
+                <p>Recibirás respuesta en pocos minutos después de completar el formulario. Sin esperas, sin trámites
+                  complicados.</p>
               </div>
             </div>
           </div>
-           <div class="accordion-item">
+          <div class="accordion-item">
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
@@ -295,11 +310,12 @@
             </h2>
             <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <p>Solo necesitas ser mayor de 18 años, tener un proyecto agroecológico o emprendimiento sustentable, y completar nuestro simulador. Así de simple.</p>
+                <p>Solo necesitas ser mayor de 18 años, tener un proyecto agroecológico o emprendimiento sustentable, y
+                  completar nuestro simulador. Así de simple.</p>
               </div>
             </div>
           </div>
-           <div class="accordion-item">
+          <div class="accordion-item">
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
@@ -308,7 +324,8 @@
             </h2>
             <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <p>Sí, mientras sea para tu proyecto agroecológico: insumos orgánicos, herramientas, sistemas de riego, producción de alimentos, cosméticos naturales, o lo que tu emprendimiento verde necesite.</p>
+                <p>Sí, mientras sea para tu proyecto agroecológico: insumos orgánicos, herramientas, sistemas de riego,
+                  producción de alimentos, cosméticos naturales, o lo que tu emprendimiento verde necesite.</p>
               </div>
             </div>
           </div>
@@ -319,7 +336,8 @@
     <section class="aliados p-5" id="aliados">
       <div class="container">
         <h2 class="text-center">Nuestros Aliados</h2>
-        <p class="text-center">Conoce a los productores agroecológicos que confían en Confio para hacer crecer sus proyectos sustentables.</p>
+        <p class="text-center">Conoce a los productores agroecológicos que confían en Confio para hacer crecer sus
+          proyectos sustentables.</p>
         <div class="aliados-logos align-items-center justify-content-center d-flex flex-wrap gap-4">
           <div class="aliado-logo">
             <img src="images/aliado1.png" alt="Logo Aliado 1">

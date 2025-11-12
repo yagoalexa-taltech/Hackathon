@@ -352,7 +352,6 @@ input[type="range"]::-moz-range-track {
 
 /* Map */
 .map-section {
-  max-width: 1320px;
   margin: 1rem auto 2rem;
   padding: 0 1rem
 }
