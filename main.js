@@ -10,21 +10,34 @@ function initMap(){
   }).addTo(map);
 }
 
-function iconFor(category){
+function iconFor(category) {
   const palette = {
-    food: '#49708A',
-    cosmetics: '#88ABC2',
-    pets: '#CAFF42'
+    food: '#49708A',      // azul profundo
+    cosmetics: '#88ABC2', // azul medio
+    pets: '#CAFF42'       // verde neón
   };
+  const icons = {
+    food: '<i class="fa-solid fa-carrot"></i>',
+    cosmetics: '<i class="fa-solid fa-leaf"></i>',
+    pets: '<i class="fa-solid fa-paw"></i>'
+  };
+
   const color = palette[category] || '#49708A';
-  // simple colored circle SVG icon
+  const iconHtml = icons[category] || '<i class="fa-solid fa-store"></i>';
+
   return L.divIcon({
     className: 'custom-marker',
-    html: `<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-      <circle cx="14" cy="14" r="10" fill="${color}" stroke="white" stroke-width="3"/>
-    </svg>`,
-    iconSize:[28,28],
-    iconAnchor:[14,14]
+    html: `
+      <div class="marker-base">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <path d="M20 0C12 0 6 6 6 14c0 8 14 26 14 26s14-18 14-26c0-8-6-14-14-14z" fill="${color}" stroke="white" stroke-width="3"/>
+        </svg>
+        <div class="marker-icon">${iconHtml}</div>
+      </div>
+    `,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -35]
   });
 }
 

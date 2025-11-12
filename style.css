@@ -74,8 +74,85 @@ body{
 .map-meta{display:flex;justify-content:space-between;align-items:center;margin:.5rem 0}
 #warn{margin-top:.5rem;padding:.6rem .8rem;border-radius:12px;background:#fff3cd;border:1px solid #ffe69c;color:#664d03}
 
+/* ==== Marcadores personalizados del mapa ==== */
+.custom-marker {
+  position: relative;
+  width: 30px;
+  height: 42px;
+}
+
+.marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  position: absolute;
+  left: 0;
+  top: 6px;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--white);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.marker-inner {
+  width: 12px;
+  height: 12px;
+  background: var(--white);
+  border-radius: 50%;
+  position: absolute;
+  top: 13px;
+  left: 9px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.custom-marker .marker-pin {
+  animation: popIn 0.4s ease;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  100% { transform: scale(1) rotate(-45deg); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.leaflet-marker-icon:hover .marker-pin {
+  filter: brightness(0.9);
+  transform: rotate(-45deg) scale(1.05);
+}
+
+.custom-marker {
+  position: relative;
+}
+
+.marker-base {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.marker-icon {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  font-size: 10px;
+  color: var(--primary-800);
+}
+/* Fin Mapa */
+
 /* ¿Como funciona */
-/* Sección: ¿Cómo funciona? */
 .como-funciona {
   background: var(--white);
   padding: 2rem 1rem;
@@ -96,7 +173,6 @@ body{
   font-size: 1rem;
 }
 
-/* Contenedor de pasos */
 .pasos {
   display: flex;
   justify-content: center;
@@ -106,7 +182,6 @@ body{
   margin: 0 auto;
 }
 
-/* Cada tarjeta (paso) */
 .paso {
   background: var(--bg-soft);
   border: 2px solid var(--primary-600);
@@ -126,7 +201,6 @@ body{
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Número grande */
 .paso h3 {
   font-size: 2.5rem;
   font-weight: 800;
@@ -134,7 +208,6 @@ body{
   margin: 0;
 }
 
-/* Título del paso */
 .paso h4 {
   font-size: 1.1rem;
   font-weight: 700;
@@ -142,7 +215,6 @@ body{
   margin-bottom: 0.5rem;
 }
 
-/* Descripción */
 .paso p {
   font-size: 0.9rem;
   color: var(--muted);
@@ -150,7 +222,6 @@ body{
   margin: 0;
 }
 
-/* Botón */
 .btn-simula {
   display: inline-block;
   margin-top: 3rem;
@@ -171,12 +242,10 @@ body{
   transform: translateY(-2px);
 }
 
-/* Scroll suave */
 html {
   scroll-behavior: smooth;
 }
 
-/* Responsivo */
 @media (max-width: 900px) {
   .pasos {
     flex-direction: column;
