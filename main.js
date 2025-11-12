@@ -2,8 +2,8 @@ let map, markers = [];
 const counterEl = document.getElementById('counter');
 const warnEl = document.getElementById('warn');
 
-function initMap(){
-  map = L.map('map', {zoomControl: true}).setView([4.65,-74.1], 11); // Bogotá fallback
+function initMap() {
+  map = L.map('map', { zoomControl: true }).setView([4.65, -74.1], 11); // Bogotá fallback
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap',
     maxZoom: 19,
@@ -41,25 +41,25 @@ function iconFor(category) {
   });
 }
 
-function setWarn(msg){
-  if(!msg){warnEl.hidden = true; warnEl.textContent='';return;}
+function setWarn(msg) {
+  if (!msg) { warnEl.hidden = true; warnEl.textContent = ''; return; }
   warnEl.hidden = false; warnEl.textContent = msg;
 }
 
-async function loadData(){
-  try{
-    const res = await fetch('./data.json',{cache:'no-store'});
-    if(!res.ok) throw new Error('No se pudo cargar el dataset');
+async function loadData() {
+  try {
+    const res = await fetch('./data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('No se pudo cargar el dataset');
     const data = await res.json();
     return Array.isArray(data) ? data : data.items || [];
-  }catch(err){
+  } catch (err) {
     console.error(err);
     setWarn('⚠️ Error al cargar los datos. Verifica el archivo data.json');
     return [];
   }
 }
 
-function renderMarkers(items){
+function renderMarkers(items) {
   // limpiar previos
   markers.forEach(m => m.remove());
   markers = [];
@@ -67,15 +67,15 @@ function renderMarkers(items){
   items.forEach(item => {
     // validar coordenadas KPI
     const lat = Number(item.lat), lon = Number(item.lon);
-    if(Number.isFinite(lat) && Number.isFinite(lon)){
-      const m = L.marker([lat, lon], {icon: iconFor(item.industry)})
+    if (Number.isFinite(lat) && Number.isFinite(lon)) {
+      const m = L.marker([lat, lon], { icon: iconFor(item.industry) })
         .addTo(map)
         .bindPopup(`
           <div class="popup">
             <strong>${item.name ?? 'Sin nombre'}</strong><br/>
-            <small>${(item.city||'')}${item.address ? ' - '+item.address : ''}</small><br/>
+            <small>${(item.city || '')}${item.address ? ' - ' + item.address : ''}</small><br/>
             <span class="badge">${labelIndustry(item.industry)}</span>
-            ${item.url ? `<div style="margin-top:.3rem"><a target="_blank" rel="noopener" href="${item.url}">Cómo llegar / sitio</a></div>`:''}
+            ${item.url ? `<div style="margin-top:.3rem"><a target="_blank" rel="noopener" href="${item.url}">Cómo llegar / sitio</a></div>` : ''}
           </div>
         `);
       markers.push(m);
@@ -86,77 +86,77 @@ function renderMarkers(items){
 
 }
 
-function labelIndustry(key){
-  return key==='food' ? 'Alimentos' : key==='cosmetics' ? 'Cosméticos' : key==='pets' ? 'Mascotas' : key;
+function labelIndustry(key) {
+  return key === 'food' ? 'Alimentos' : key === 'cosmetics' ? 'Cosméticos' : key === 'pets' ? 'Mascotas' : key;
 }
 
-function applyFilter(items, category){
-  if(category === 'all') return items;
+function applyFilter(items, category) {
+  if (category === 'all') return items;
   return items.filter(x => x.industry === category);
 }
 
-function activateCard(category){
-  document.querySelectorAll('.card').forEach(btn=>{
-    btn.setAttribute('aria-pressed', String(btn.dataset.category===category));
+function activateCard(category) {
+  document.querySelectorAll('.card').forEach(btn => {
+    btn.setAttribute('aria-pressed', String(btn.dataset.category === category));
   });
 }
 
-document.getElementById('go-to-map').addEventListener('click', ()=>{
-  document.getElementById('map').scrollIntoView({behavior:'smooth'});
+document.getElementById('go-to-map').addEventListener('click', () => {
+  document.getElementById('map').scrollIntoView({ behavior: 'smooth' });
 });
 
-document.getElementById('go-to-simulador').addEventListener('click', ()=>{
-  document.getElementById('simulador').scrollIntoView({behavior:'smooth'});
+document.getElementById('go-to-simulador').addEventListener('click', () => {
+  document.getElementById('simulador').scrollIntoView({ behavior: 'smooth' });
 });
 
-document.getElementById('locate').addEventListener('click', ()=>{
-  if(!navigator.geolocation){
+document.getElementById('locate').addEventListener('click', () => {
+  if (!navigator.geolocation) {
     setWarn('Tu navegador no permite geolocalización.');
     return;
   }
   navigator.geolocation.getCurrentPosition(
     pos => {
       setWarn('');
-      const {latitude, longitude} = pos.coords;
+      const { latitude, longitude } = pos.coords;
       map.setView([latitude, longitude], 13);
       // marcador temporal del usuario
-      L.circleMarker([latitude, longitude], {radius:7, color:'#111827', fillOpacity:0.2}).addTo(map);
+      L.circleMarker([latitude, longitude], { radius: 7, color: '#111827', fillOpacity: 0.2 }).addTo(map);
     },
     err => setWarn('No se pudo obtener tu ubicación (permiso denegado o indisponible).'),
-    {enableHighAccuracy:true,timeout:5000,maximumAge:0}
+    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
   );
 });
 
-(async function run(){
+(async function run() {
   initMap();
   const items = await loadData();
   renderMarkers(items);
   const cpCfg = await loadConfiConfig();
-  renderConfiPuntos(cpCfg); 
+  renderConfiPuntos(cpCfg);
 
   // Filtros por tarjetas
   document.querySelectorAll('.card').forEach(btn => {
-    btn.addEventListener('click', ()=>{
+    btn.addEventListener('click', () => {
       const category = btn.dataset.category;
       activateCard(category);
       const filtered = applyFilter(items, category);
       renderMarkers(filtered);
-      if(filtered.length>0){
-        const first = filtered.find(x=>Number.isFinite(Number(x.lat)) && Number.isFinite(Number(x.lon)));
-        if(first) map.setView([Number(first.lat), Number(first.lon)], 12);
+      if (filtered.length > 0) {
+        const first = filtered.find(x => Number.isFinite(Number(x.lat)) && Number.isFinite(Number(x.lon)));
+        if (first) map.setView([Number(first.lat), Number(first.lon)], 12);
       }
     });
   });
 })();
 
 // Inicializar acordeones de Bootstrap
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const accordionButtons = document.querySelectorAll('.accordion-button');
   accordionButtons.forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       const targetId = this.getAttribute('data-bs-target');
       const target = document.querySelector(targetId);
-      
+
       if (target) {
         // Cerrar otros items del mismo acordeón
         const parent = this.closest('.accordion');
@@ -166,10 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
             el.classList.remove('show');
           }
         });
-        
+
         // Toggle del item actual
         target.classList.toggle('show');
-        
+
         // Actualizar aria-expanded
         this.setAttribute('aria-expanded', target.classList.contains('show'));
       }
@@ -181,11 +181,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const ageNumber = document.getElementById('ageNumber');
 
   if (ageRange && ageNumber) {
-    ageRange.addEventListener('input', function() {
+    ageRange.addEventListener('input', function () {
       ageNumber.value = this.value;
     });
 
-    ageNumber.addEventListener('input', function() {
+    ageNumber.addEventListener('input', function () {
       if (this.value >= 18 && this.value <= 50) {
         ageRange.value = this.value;
       }
@@ -207,18 +207,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const monto = parseFloat(document.getElementById("monto").value);
     const plazoMeses = parseInt(document.getElementById("plazo").value);
     const tipoPago = document.querySelector('input[name="tipoPago"]:checked').value;
+    const nombre = document.getElementById("nombre").value.trim();
+    const diaPago = document.querySelector('input[name="diaPago"]:checked').value;
 
     const data = simularCredito({
       edad,
       monto,
       plazoMeses,
-      tipoPago
+      tipoPago,
+      diaPago
     });
 
     mostrarResultados(data);
   });
 
   function mostrarResultados(data) {
+    // Cambiar el título del resumen con el nombre del usuario
+    // Cambiar el título del resumen con el nombre del usuario + salto de línea
+    const nombreUsuario = document.getElementById("nombre").value.trim();
+    const tituloResumen = document.querySelector(".resumen-titulo");
+
+    if (nombreUsuario && tituloResumen) {
+      tituloResumen.innerHTML = `Hola ${nombreUsuario}, <br> Aquí está el resumen de tu crédito`;
+    }
     const tablaContainer = document.getElementById("tablaContainer");
     const tablaBody = document.getElementById("tablaAmortizacion");
 
@@ -238,7 +249,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     set("r-categoria", data.categoria);         // Bajo/Mediano/Alto monto (según tu JS)
     set("r-tasa", data.tasaMensual);            // "2.00%" etc.
-    set("r-plazo", data.plazoFinal);            // "12 semanas" o "6 meses"
+    set("r-plazo", data.plazoFinal);           // "12 semanas" o "6 meses"
+    set("r-dia", data.diaPago ? `${data.diaPago} de cada mes` : "");   
     set("r-cuota", money(data.cuotaBase));
     set("r-total", money(data.totalPagado));
     set("r-interes", money(data.totalInteres));
@@ -264,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Función base de simulación
-  function simularCredito({edad, monto, plazoMeses, tipoPago }) {
+  function simularCredito({ edad, monto, plazoMeses, tipoPago, diaPago }) {
     let categoria = "";
     let tasaMensual = 0;
     let plazoMax = 0;
@@ -339,30 +351,31 @@ document.addEventListener("DOMContentLoaded", () => {
       totalPagado: totalPagado.toFixed(2),
       totalInteres: totalInteres.toFixed(2),
       totalSeguro: totalSeguro.toFixed(2),
-      tabla
+      tabla,
+      diaPago
     };
   }
 });
 // === ConFiPuntos ===
-async function loadConfiConfig(){
-  try{
-    const res = await fetch('./data.json',{cache:'no-store'});
+async function loadConfiConfig() {
+  try {
+    const res = await fetch('./data.json', { cache: 'no-store' });
     const data = await res.json();
     // soporta data como array (legacy) u objeto con items+confipuntos (nuevo)
     if (Array.isArray(data)) return { levels: defaultCpLevels() };
     return { levels: data.confipuntos?.levels ?? defaultCpLevels() };
-  }catch{
+  } catch {
     return { levels: defaultCpLevels() };
   }
 }
 
-function defaultCpLevels(){
+function defaultCpLevels() {
   return [
-    { name: "Semilla", min: 0,   max: 99,  bonusRate: 0.0,  bonusAmount: 0 },
-    { name: "Brotes",  min: 100, max: 299, bonusRate: -0.2, bonusAmount: 100_000 },
-    { name: "Raíces",  min: 300, max: 699, bonusRate: -0.4, bonusAmount: 300_000 },
-    { name: "Hoja",    min: 700, max: 999, bonusRate: -0.6, bonusAmount: 600_000 },
-    { name: "Bosque",  min: 1000, max: 999999, bonusRate: -1.0, bonusAmount: 1_000_000 }
+    { name: "Semilla", min: 0, max: 99, bonusRate: 0.0, bonusAmount: 0 },
+    { name: "Brotes", min: 100, max: 299, bonusRate: -0.2, bonusAmount: 100_000 },
+    { name: "Raíces", min: 300, max: 699, bonusRate: -0.4, bonusAmount: 300_000 },
+    { name: "Hoja", min: 700, max: 999, bonusRate: -0.6, bonusAmount: 600_000 },
+    { name: "Bosque", min: 1000, max: 999999, bonusRate: -1.0, bonusAmount: 1_000_000 }
   ];
 }
 
@@ -389,12 +402,12 @@ function renderConfiPuntos(cfg) {
 }
 
 
-function updateCpProgress(points, cfg){
+function updateCpProgress(points, cfg) {
   const maxRef = Math.min(100, (cfg.levels?.[1]?.min ?? 100)); // meta visible inicial
   const pct = Math.max(0, Math.min(100, (points / maxRef) * 100));
   const fill = document.getElementById('cp-progreso-fill');
   const label = document.getElementById('cp-progreso-label');
-  if(fill) fill.style.width = `${pct}%`;
-  if(label) label.textContent = `${points} / ${maxRef} pts`;
+  if (fill) fill.style.width = `${pct}%`;
+  if (label) label.textContent = `${points} / ${maxRef} pts`;
 }
- 
+

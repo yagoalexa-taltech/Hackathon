@@ -136,7 +136,24 @@
                   <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>
                   <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
                 </div>
+                <div class="mb-3">
+                  <label class="fw-bold">¿Qué día prefieres pagar?</label><br>
 
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="diaPago" id="dia5" value="5" checked>
+                    <label class="form-check-label" for="dia5">5 de cada mes</label>
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="diaPago" id="dia10" value="10">
+                    <label class="form-check-label" for="dia10">10 de cada mes</label>
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="diaPago" id="dia15" value="15">
+                    <label class="form-check-label" for="dia15">15 de cada mes</label>
+                  </div>
+                </div>
                 <div class="text-center">
                   <button type="submit" class="btn-primary mt-3 px-4 py-2">¡Vamos por tu crédito! 🚀</button>
                 </div>
@@ -150,46 +167,51 @@
               <!-- Resumen principal -->
               <div id="resumen" class="resumen-card">
                 <div class="resumen-item-destacado">
-                <div class="resumen-item">
-                  <span class="resumen-label">Tu pagaras:</span>
-                  <span class="resumen-value-grande" id="r-cuota"></span>
+                  <div class="resumen-item">
+                    <span class="resumen-label">Tu pagaras:</span>
+                    <span class="resumen-value-grande" id="r-cuota"></span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">Categoría:</span>
+                    <span class="resumen-value" id="r-categoria"></span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">Tasa mensual:</span>
+                    <span class="resumen-value" id="r-tasa"></span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">Plazo total:</span>
+                    <span class="resumen-value" id="r-plazo"></span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">Día de pago:</span>
+                    <span class="resumen-value" id="r-dia"></span>
+                  </div>
                 </div>
-                <div class="resumen-item">
-                  <span class="resumen-label">Categoría:</span>
-                  <span class="resumen-value" id="r-categoria"></span>
+                <!-- Sección inferior: ConfiPuntos y Beneficios -->
+                <div class="confipuntos-section">
+                  <h5 class="confipuntos-titulo">Ganarás conFipuntos</h5>
+                  <div class="confipuntos-valor">
+                    <span class="resume-value" id="r-confipuntos">5.000</span>
+                  </div>
+                  <p class="confipuntos-desc">Podrás hacer tus puntos efectivos y aumentar tu cupo mientras fortaleces
+                    tus hábitos de pago y apoyas un modelo agroecológico más sostenible.</p>
                 </div>
-                <div class="resumen-item">
-                  <span class="resumen-label">Tasa mensual:</span>
-                  <span class="resumen-value" id="r-tasa"></span>
-                </div>
-                <div class="resumen-item">
-                  <span class="resumen-label">Plazo total:</span>
-                  <span class="resumen-value" id="r-plazo"></span>
-                </div>
-              </div>
-              <!-- Sección inferior: ConfiPuntos y Beneficios -->
-              <div class="confipuntos-section">
-                <h5 class="confipuntos-titulo">Ganarás conFipuntos</h5>
-                <div class="confipuntos-valor">
-                  <span class="resume-value" id="r-confipuntos">5.000</span>
-                </div>
-                <p class="confipuntos-desc">Podrás hacer tus puntos efectivos y aumentar tu cupo mientras fortaleces tus hábitos de pago y apoyas un modelo agroecológico más sostenible.</p>
-              </div>
 
-              <div class="beneficios-section">
-                <h5 class="beneficios-titulo">Beneficios</h5>
-                <div class="beneficio-item">
-                  <i class="fa-solid fa-truck"></i>
-                  <span>Redime tus puntos y accede a préstamos más altos.
-Además, disfruta de descuentos especiales con nuestros aliados del sector agroecológico.</span>
-                </div>
-                <div class="beneficio-item">
-                  <i class="fa-solid fa-calendar-check"></i>
-                  <span>Escoge el día del mes que quieres pagar</span>
+                <div class="beneficios-section">
+                  <h5 class="beneficios-titulo">Beneficios</h5>
+                  <div class="beneficio-item">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Redime tus puntos y accede a préstamos más altos.
+                      Además, disfruta de descuentos especiales con nuestros aliados del sector agroecológico.</span>
+                  </div>
+                  <div class="beneficio-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Escoge el día del mes que quieres pagar</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
     </section>
 
 
@@ -273,7 +295,7 @@ Además, disfruta de descuentos especiales con nuestros aliados del sector agroe
     </section>
 
     <!-- fin cómo funciona -->
-    
+
     <!-- ConFiPuntos -->
     <section class="confipuntos" id="confipuntos" aria-labelledby="cp-title">
       <div class="container">
