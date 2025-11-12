@@ -362,7 +362,7 @@ function defaultCpLevels(){
     { name: "Brotes",  min: 100, max: 299, bonusRate: -0.2, bonusAmount: 100_000 },
     { name: "Raíces",  min: 300, max: 699, bonusRate: -0.4, bonusAmount: 300_000 },
     { name: "Hoja",    min: 700, max: 999, bonusRate: -0.6, bonusAmount: 600_000 },
-    { name: "Bosque",  min: 1000, max: 999999, bonusRate: -1.0, bonusAmount: 1000_000 }
+    { name: "Bosque",  min: 1000, max: 999999, bonusRate: -1.0, bonusAmount: 1_000_000 }
   ];
 }
 
