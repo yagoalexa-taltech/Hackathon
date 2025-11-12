@@ -72,34 +72,93 @@
     </section>
     <!--Fin Mapa-->
     <!-- formulario -->
-    <section class="form">
-      <div class="container">
-        <h2 class="text-center">Te prestamos [para comprar tus alimentos]</h2>
-        <p class="text-center">Diligencia el formulario y así conoce cuanto te prestamos</p>
-        <div class="col-md-6">
-          <form action="" class="form">
-          <div class="input-group mb-3">
-            <div class="form-floating">
-              <input type="text" class="form-control" id="name" placeholder="El nombre de tu negocio"
-                required>
-              <label for="name">¿Cómo es tu nombre o el de tu negocio?</label>
+    <section class="form" id="simulador">
+      <div class="container simulador-grid">
+        <!-- Columna izquierda: Formulario -->
+        <div class="simulador-left">
+          <h2>¡Te financiamos tu compra!</h2>
+          <p>Diligencia el formulario y conoce cuánto te prestamos para tu proximo producto. </p>
+
+          <form id="creditoForm" class="p-4 rounded shadow-sm" style="background: var(--bg-soft)">
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">¿Cómo es tu nombre o el de tu negocio?</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Ej. Puppy’s" required>
             </div>
-          </div>
-          <div class="input-group mb-3">
-            <label class="" for="age">¿Cuál es tu edad?</label>
-            <input type="range" class="form-range" id="age" min="18" max="40" value="18">
-            <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18">
-          </div>
-          <div class="input-group mb-3">
-            <label class="" for="amount">Cúanto puedes pagar [time]</label>
-            <input type="range" class="form-range" id="amount" min="20000" max="5000000" value="20000">
-            <input type="number" class="form-control" id="amountNumber" min="20000" max="5000000" value="20000">
-          </div>
-        </form>
+
+            <div class="input-group mb-3">
+              <label for="age" class="">¿Cuántos años tienes?</label>
+              <input type="range" class="form-range" id="age" min="18" max="40" value="18">
+              <input type="number" class="form-control" id="ageNumber" min="18" max="40" value="18" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bold">¿Cómo prefieres pagar?</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tipoPago" id="mensual" value="Mensual" checked>
+                <label class="form-check-label" for="mensual">Mensualmente</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tipoPago" id="semanal" value="Semanal">
+                <label class="form-check-label" for="semanal">Semanalmente</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="monto" class="form-label fw-bold">¿Cuánto dinero deseas solicitar? (COP)</label>
+              <input type="number" class="form-control" id="monto" min="20000" max="5000000" step="10000" value="1000000" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="plazo" class="form-label fw-bold">¿Durante cuántos meses?</label>
+              <input type="number" class="form-control" id="plazo" min="1" max="24" value="6" required>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn-primary mt-3 px-4 py-2">¡Vamos por tu crédito! 🚀</button>
+            </div>
+          </form>
         </div>
-        
+
+        <!-- Columna derecha: Resumen + Beneficios -->
+        <div class="simulador-right">
+          <h4>💰 Resumen de tu crédito</h4>
+          <div id="resumen">
+            <p>Completa el formulario para ver el resumen de tu crédito :) .</p>
+          </div>
+
+          <div class="beneficios mt-4 p-3 rounded">
+            <h5>🎁 Beneficios</h5>
+            <ul>
+              <li>Tasas preferenciales para tus productos agroecológicos</li>
+              <li>Bonificación por pago puntual</li>
+              <li>Gana ConFiPuntos  </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla de amortización -->
+      <div class="container mt-5" id="tablaContainer" style="display:none;">
+        <h4 class="text-center mb-3">Tabla de amortización</h4>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered align-middle">
+            <thead class="table-primary">
+              <tr>
+                <th>Cuota</th>
+                <th>Capital</th>
+                <th>Interés</th>
+                <th>Seguro de Vida</th>
+                <th>Total Cuota</th>
+                <th>Saldo Restante</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAmortizacion"></tbody>
+          </table>
+        </div>
       </div>
     </section>
+
+
     <!-- fin formulario -->
     <!-- resultado formulario -->
 
